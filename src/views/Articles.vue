@@ -1,128 +1,104 @@
 <template>
-	<div class="container">
-		<div class="media-wraaper">
-			<div class="media" v-for="(article, index) in articles" :key="index">
+	<div class="row">
+		<div v-for="(item, index) in articles" :key="index" class="col-12">
+			<div class="media-wraaper bg shadow">
 				<div class="media-left">
-					<img :src="article.avatar" class="bl-avatar-normal" />
-					<p class="sub-title">{{ article.nickname }}</p>
+					<img :src="item.author.avatar" class="avatar-lg link" />
+					<p>{{ item.author.nickname }}</p>
+					<strong>来自</strong>
+					<p>{{ item.topic.topicName }}</p>
 				</div>
-				<div class="media-middle">
-					<h2>{{ article.title }}</h2>
-					<p>{{ article.summary }}</p>
+				<div class="media-middle flex flex-left flex-around">
+					<router-link :to="{ path: '/article/' + item.article.id }">
+						<p>
+							<span>{{ item.article.id }}</span>
+							{{ item.article.title }}
+						</p>
+					</router-link>
+					<p class="sub-title link">{{ item.article.summary }}</p>
 					<p>
-						<span>{{ article.content }}</span>
+						<span class="meta">{{ item.article.comments }}评论</span>
+						<i class="iconfont">&#xe635;</i>
+						<span class="meta">  {{ item.article.likes }}喜欢</span>
+						<i class="iconfont" style="color: rgb(255, 50, 0);">&#xe602;</i>
 					</p>
-					<p class="kk">
-						<i class="iconfont" style="color: #e53935;">&#xe64a;</i>
-						<span class="id">{{ article.diamond }}</span>
-						<i class="iconfont">&#xe666;</i>
-						<span class="jian">{{ article.likes }}</span>
-						<i class="iconfont">&#xe630;</i>
-						<span>{{ article.comments }}</span>
-					</p>
+					<span class="time">发表时间：{{ item.article.createTime.date.year }}年{{ item.article.createTime.date.month }}月{{ item.article.createTime.date.day }}日</span>
 				</div>
-				<div class="media-right"><img :src="article.avatar" /></div>
+				<div class="media-right"><img :src="item.article.thumbnail" /></div>
 			</div>
 		</div>
+
+		<div class="col-12"><button class="btn btn-lg warning-fill" @click="loadMore">点击加载更多</button></div>
 	</div>
 </template>
+
 <script>
 export default {
 	data() {
 		return {
-			articles: []
+			articles: [],
+			currentPage: 1,
+			count: 20
 		};
 	},
 	created() {
-		this.axios.get('http://localhost:8080/api/articles/hot').then(res => {
-			console.log(res.data.data);
-			this.articles = res.data.data;
-		});
+		this.axios
+			.get(this.GLOBAL.baseUrl + '/article', {
+				params: {
+					page: this.currentPage,
+					count: this.count
+				}
+			})
+			.then(res => {
+				console.log(res.data.data.length);
+				this.articles = res.data.data;
+			});
 	},
-	computed: {
-		// 解决403图片缓存问题
-		getImages(_url) {
-			if (_url) {
-				let _u = _url.substring(8);
-				return 'https://images.weserv.nl/?url=' + _u;
-			}
+	methods: {
+		loadMore() {
+			this.currentPage = this.currentPage + 1;
+			this.axios
+				.get(this.GLOBAL.baseUrl + '/article', {
+					params: {
+						page: this.currentPage,
+						count: this.count
+					}
+				})
+				.then(res => {
+					console.log(res.data.data.length);
+					let temp = [];
+					temp = res.data.data;
+					for (var i = 0; i < temp.length; i++) {
+						this.articles.splice(this.currentPage * this.count, 0, temp[i]);
+					}
+					console.log(this.articles.length);
+				});
 		}
 	}
 };
 </script>
-<style scoped>
-.container {
-	margin-top: 100px;
-}
-.media-wraaper {
-	width: 100%;
-	height: 100px;
-	padding: 10px;
-}
-.media {
-	display: flex;
-	align-items: stretch;
-	justify-content: flex-start;
-	border-bottom: 1px solid #ddd;
-	border-radius: 5px;
-	background-color: #fff;
-	margin-bottom: 5px;
-	padding-top: 5px; /* height: 250px; */
-}
-.media-left {
-	flex: 0 0 15%;
-	text-align: center;
-	line-height: 50px;
-	border-right: 1px solid #eee;
-}
-.bl-avatar-normal {
-	height: 150px;
-}
-.media-middle {
-	flex: 1 1 60%;
-	padding-left: 10px;
-	padding-right: 10px;
-	line-height: 24px;
-}
-.media-middle h4 {
-	font-weight: 600;
-}
-.media-middle p {
-	font-size: 14px;
-	color: #aaa;
-}
-.media-right {
-	flex: 0 0 20%;
-	text-align: center;
-	margin-right: 10px;
-}
-.media-right img {
-	width: 120px;
-	height: 100px;
-	border-radius: 10px;
+
+<style scoped="scoped">
+.bg {
+	background-size: contain;
+	background-position-y: 100px;
 }
 @font-face {
-	font-family: 'iconfont'; /* project id 1434161 */
-	src: url('//at.alicdn.com/t/font_1434161_x6ye9jb8msd.eot');
-	src: url('//at.alicdn.com/t/font_1434161_x6ye9jb8msd.eot?#iefix') format('embedded-opentype'), url('//at.alicdn.com/t/font_1434161_x6ye9jb8msd.woff2') format('woff2'),
-		url('//at.alicdn.com/t/font_1434161_x6ye9jb8msd.woff') format('woff'), url('//at.alicdn.com/t/font_1434161_x6ye9jb8msd.ttf') format('truetype'),
-		url('//at.alicdn.com/t/font_1434161_x6ye9jb8msd.svg#iconfont') format('svg');
+	font-family: 'iconfont'; /* project id 1434148 */
+	src: url('//at.alicdn.com/t/font_1434148_os48i7mdre.eot');
+	src: url('//at.alicdn.com/t/font_1434148_os48i7mdre.eot?#iefix') format('embedded-opentype'), url('//at.alicdn.com/t/font_1434148_os48i7mdre.woff2') format('woff2'),
+		url('//at.alicdn.com/t/font_1434148_os48i7mdre.woff') format('woff'), url('//at.alicdn.com/t/font_1434148_os48i7mdre.ttf') format('truetype'),
+		url('//at.alicdn.com/t/font_1434148_os48i7mdre.svg#iconfont') format('svg');
 }
 .iconfont {
 	font-family: 'iconfont' !important;
-	font-size: 16px;
+	font-size: 18px;
 	font-style: normal;
 	-webkit-font-smoothing: antialiased;
-	-webkit-text-stroke-width: 0.2px;
+	-webkit-text-stroke-width: 0.4px;
 	-moz-osx-font-smoothing: grayscale;
 }
-.id {
-	margin-right: 15px;
-}
-.jian {
-	margin-right: 15px;
-}
-.kk {
-	padding-top: 125px;
+.time {
+	margin-left: 50px;
 }
 </style>

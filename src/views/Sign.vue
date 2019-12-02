@@ -226,7 +226,7 @@ export default {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	background-image: url(../../../layout/img/12.jpg);
+	background-image: url(../assets/img/12.jpg);
 	/* 图片全屏 */
 	background-size: calc(100%);
 }

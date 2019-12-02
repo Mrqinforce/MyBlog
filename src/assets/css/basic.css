@@ -1,103 +1,264 @@
-/* 基础样式，规定所有自定义统一前缀*/
-
-/* -----------全局设置---------- */
+/* 初始化 */
 * {
+	box-sizing: border-box;
 	margin: 0;
 	padding: 0;
+}
+
+img {
+	border: none;
+}
+
+li,
+ol,
+ul {
+	list-style: none;
+}
+
+button,
+input,
+select,
+textarea {
 	box-sizing: border-box;
 	outline: none;
 }
 
-a {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-weight: 600;
+}
+
+a,
+a:link,
+a:visited,
+a:hover,
+a:active {
 	text-decoration: none;
 }
 
-u {
-	list-style: none;
+/* 浮动方式 */
+.pull-left {
+	float: left;
 }
 
-/* -----------布局设置---------- */
-.zh-container {
-	width: 80%;
-	margin: auto;
-
+.pull-right {
+	float: right;
 }
 
-.zh-row {
-	display: flex;
-	flex-wrap: wrap;
+.clear {
+	overflow: hidden;
+	clear: both;
+	height: 0;
+	font-size: 0;
 }
 
-.zh-col-12 {
-	flex: 1 1 100%;
+.clearfix::after {
+	display: block;
+	visibility: hidden;
+	clear: both;
+	height: 0;
+	font-size: 0;
+	content: "";
 }
 
-.zh-col-8 {
-	flex: 1 1 66.6%;
-
+/* 定位方式 */
+.pr {
+	position: relative;
 }
 
-.zh-col-6 {
-	flex: 1 1 50%;
+.pa {
+	position: absolute;
 }
 
-.zh-col-4 {
-	flex: 1 1 33.3%;
-	background-color: green;
+.pf {
+	position: fixed;
 }
 
-.zh-col-3 {
-	flex: 1 1 25%;
+.center {
+	margin: 0 auto;
 }
 
-.zh-col-2 {
-	flex: 1 1 16.6%;
+/* 对齐方式 */
+.tx-left {
+	text-align: left;
 }
 
-.zh-col-1 {
-	flex: 1 1 8.3%;
-}
-
-/* -----------对齐方式设置---------- */
-/* flex横向布局的对齐,横向居中,纵向居中 */
-.zh-fx-center {
-	justify-content: center;
-}
-
-/* flex横向布局的对齐,横向左对齐,纵向居中 */
-.zh-fx-left {
-	justify-content: flex-start;
-}
-
-/* flex横向布局的对齐,横向右对齐,纵向居中 */
-.zh-fx-right {
-	justify-content: flex-end;
-}
-
-/* flex横向布局的对齐,横向两端对齐，纵向居中 */
-.zh-fx-between {
-	justify-content: space-between;
-}
-
-/* flex横向布局的对齐,横向均匀分布，纵向居中 */
-.zh-fx-around {
-	justify-content: space-around;
-}
-
-.zh-center {
+.tx-center {
 	text-align: center;
 }
 
-/* 指定统一前缀的class样式 */
-[class*='zh-fx'] {
+.tx-right {
+	text-align: right;
+}
+
+.tx-justify {
+	text-align: justify;
+}
+
+/* 居中定位 */
+.abs-center {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+}
+
+/* 垂直居中,水平居右 */
+.abs-center-right {
+	position: absolute;
+	left: 82%;
+	top: 50%;
+	transform: translate(-82%, -50%);
+}
+
+.abs-cx {
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+.abs-cy {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+}
+
+/* 弹性布局 */
+.flex {
 	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+}
+
+.flex-center {
+	justify-content: center;
+}
+
+.flex-between {
+	justify-content: space-between;
+}
+
+.flex-around {
+	justify-content: space-around;
+}
+
+.flex-left {
+	justify-content: flex-start;
+}
+
+.flex-right {
+	justify-content: flex-end;
+}
+
+
+
+.flex-center-y {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
 	align-items: center;
 }
 
-/* flex纵向布局的对齐,横向居中，纵向顶端对齐 */
-.zh-fx-top {
+.flex-top-y {
 	display: flex;
-	flex-direction: column;
-	justify-content: flex-start;
-	align-items: center;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-content: space-between;
+}
+
+.container {
+	width: 80%;
+	margin: 0 auto;
+}
+
+/* 栅格 */
+.row {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-start;
+	padding: 10px;
+}
+
+.col-12 {
+	flex: 0 0 100%;
+}
+
+.col-8 {
+	flex: 0 0 66.6%;
+}
+
+.col-6 {
+	flex: 0 0 50%;
+}
+
+.col-4 {
+	flex: 0 0 33.3%;
+}
+
+.col-3 {
+	flex: 0 0 25%;
+}
+
+.col-2 {
+	flex: 0 0 16.6%;
+}
+
+.col-1 {
+	flex: 0 0 8.3%;
+}
+
+
+/* 动画模式 */
+.td-camera {
+	perspective: 1000;
+}
+
+.td-space {
+	transform-style: preserve-3d;
+}
+
+.td-box {
+	backface-visibility: hidden;
+}
+
+.gpu-speed {
+	transform: translate3d(0, 0, 0);
+}
+
+/* 全屏 */
+.fullscreen {
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+}
+
+/* 省略 */
+.ellipsis {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+/* 圆形 */
+.circle {
+	border-radius: 100%;
+}
+
+.round {
+	border-radius: 10px;
+}
+
+/* 链接样式 */
+.link {
+	cursor: pointer;
+}
+
+/* 间距 */
+.gutter {
+	margin-right: 10px;
 }

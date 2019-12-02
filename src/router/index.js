@@ -1,18 +1,27 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+
 import Nav from '@/views/Nav.vue'
+import SignIn from '@/views/SignIn.vue'
+import SignUp from '@/views/SignUp.vue'
+
 import Index from '@/views/Index.vue'
-import Collections from '@/views/Collections.vue'
-import CollectionDetail from '@/views/CollectionDetail.vue'
 import Articles from '@/views/Articles.vue'
-import ArticleDetail from '@/views/ArticleDetail.vue'
+import Topics from '@/views/Topics.vue'
 import Users from '@/views/Users.vue'
+import ArticleDetail from '@/views/ArticleDetail.vue'
+import TopicDetail from '@/views/TopicDetail.vue'
 import UserDetail from '@/views/UserDetail.vue'
-import UserFans from '@/views/UserFans.vue'
-import UserFollows from '@/views/UserFollows.vue'
-import Sign from '@/views/Sign.vue'
+
+import Search from '@/views/Search.vue'
+import SearchUser from '@/views/SearchUser.vue'
+import SearchTopic from '@/views/SearchTopic.vue'
+import SearchArticle from '@/views/SearchArticle.vue'
 
 
+import Basic from '@/views/Basic.vue'
+import Setting from '@/views/Setting.vue'
+import Empty from '@/views/Empty.vue'
 Vue.use(VueRouter)
 
 const routes = [{
@@ -20,50 +29,71 @@ const routes = [{
 		component: Nav,
 		children: [{
 				path: '/',
-				redirect: '/index'
+				redirect: 'index'
 			},
 			{
 				path: 'index',
 				component: Index
 			},
 			{
-				path: 'collection',
-				component: Collections,
-				children: [{
-					path: ':id',
-					component: CollectionDetail
-				}]
+				path: 'articles',
+				component: Articles
 			},
 			{
-				path: 'article',
-				component: Articles,
-				children: [{
-					path: ':id',
-					component: ArticleDetail
-				}]
+				path: 'article/:id',
+				component: ArticleDetail
 			},
 			{
-				path: 'user',
-				component: Users,
+				path: 'topics',
+				component: Topics
+			},
+			{
+				path: 'topic/:id',
+				component: TopicDetail
+			},
+
+			{
+				path: 'users',
+				component: Users
+			},
+			{
+				path: 'user/:id',
+				component: UserDetail
+			},
+			{
+				path: 'search',
+				component: Search,
 				children: [{
-						path: 'follows',
-						component: UserFollows
+						path: '/',
+						redirect: 'article'
 					},
 					{
-						path: 'fans',
-						component: UserFans
+						path: 'article',
+						component: SearchArticle
 					},
 					{
-						path: ':id',
-						component: UserDetail
+						path: 'topic',
+						component: SearchTopic
+					},
+					{
+						path: 'user',
+						component: SearchUser
 					}
 				]
+			},
+			{
+				path: 'empty',
+				component: Empty
 			}
 		]
 	},
 	{
-		path: '/sign',
-		component: Sign
+		path: '/sign-in',
+		component: SignIn
+	},
+	{
+		path: '/sign-up',
+		component: SignUp
 	}
 ]
 
