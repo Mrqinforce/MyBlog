@@ -1,7 +1,8 @@
 <template>
 	<div>
 		<div class="back"><img src=../assets/img/background1.jpg /></div>
-		<div class="row " >
+		
+		<div class="row">
 			<div class="col-3" v-for="(item, index) in topics" :key="index">
 				<div class="card link shadow">
 					<router-link :to="{ path: '/topic/' + item.id }"><img :src="item.logo" class="logo" /></router-link>
@@ -13,7 +14,6 @@
 					</p>
 				</div>
 			</div>
-			
 		</div>
 
 		<div class="row">
@@ -31,12 +31,16 @@
 							<router-link :to="{ path: '/article/' + item.article.id }" class="subtitle">{{ item.article.title }}</router-link>
 							<p class="sub-title link">{{ item.article.summary }}</p>
 							<p>
-								<span class="meta gutter">{{ item.article.comments }}评论</span>
-								<i class="iconfont">&#xe635;</i>
+								<span class="meta">{{ item.article.comments }}评论</span>
+								<i class="iconfont gutter">&#xe635;</i>
+								<span class="meta ">转发</span>
+								<i class="iconfont meta gutter ">&#xe920;</i>
 								<span class="meta">{{ item.article.likes }}喜欢</span>
 								<i class="iconfont" style="color: rgb(255, 50, 0);">&#xe602;</i>
 							</p>
-							<span class="time">发表时间：{{ item.article.createTime.date.year }}年{{ item.article.createTime.date.month }}月{{ item.article.createTime.date.day }}日</span>
+							<span class="time">
+								发表时间：{{ item.article.createTime.date.year }}年{{ item.article.createTime.date.month }}月{{ item.article.createTime.date.day }}日
+							</span>
 						</div>
 					</div>
 				</div>
@@ -48,9 +52,9 @@
 						<div class="col-12 border box">
 							<div class="flex-center-y">
 								<router-link :to="{ path: '/user/' + item.id }"><img :src="item.avatar" class="avatar-xs link" /></router-link>
-								<p class="sub-title">{{ item.nickname }}</p>
 							</div>
 							<div class="flex-center-y">
+								<p class="sub-title">{{ item.nickname }}</p>
 								<p class="meta">写了{{ item.articles }}篇文章</p>
 								<p class="meta">{{ item.fans }}个粉丝</p>
 							</div>
@@ -365,7 +369,7 @@
 								</div>
 							</div>
 						</div>
-					</div>
+					</div>				
 				</div>
 			</div>
 		</div>
@@ -401,10 +405,10 @@ export default {
 <style scoped="scoped">
 @font-face {
 	font-family: 'iconfont'; /* project id 1434148 */
-	src: url('//at.alicdn.com/t/font_1434148_dvenubeepo8.eot');
-	src: url('//at.alicdn.com/t/font_1434148_dvenubeepo8.eot?#iefix') format('embedded-opentype'), url('//at.alicdn.com/t/font_1434148_dvenubeepo8.woff2') format('woff2'),
-		url('//at.alicdn.com/t/font_1434148_dvenubeepo8.woff') format('woff'), url('//at.alicdn.com/t/font_1434148_dvenubeepo8.ttf') format('truetype'),
-		url('//at.alicdn.com/t/font_1434148_dvenubeepo8.svg#iconfont') format('svg');
+	src: url('//at.alicdn.com/t/font_1434148_ipcx04sb44o.eot');
+	src: url('//at.alicdn.com/t/font_1434148_ipcx04sb44o.eot?#iefix') format('embedded-opentype'), url('//at.alicdn.com/t/font_1434148_ipcx04sb44o.woff2') format('woff2'),
+		url('//at.alicdn.com/t/font_1434148_ipcx04sb44o.woff') format('woff'), url('//at.alicdn.com/t/font_1434148_ipcx04sb44o.ttf') format('truetype'),
+		url('//at.alicdn.com/t/font_1434148_ipcx04sb44o.svg#iconfont') format('svg');
 }
 .iconfont {
 	font-family: 'iconfont' !important;
@@ -417,7 +421,7 @@ export default {
 .back img {
 	width: 100%;
 	height: 800px;
-background-size: 100%;
+	background-size: 100%;
 }
 .logo:hover {
 	opacity: 0.6;
@@ -429,7 +433,7 @@ background-size: 100%;
 .box {
 	display: flex;
 	justify-content: space-around;
-	height: 70px;
+	height: 120px;
 	padding: 10px;
 }
 .btn-follow {
@@ -444,6 +448,7 @@ background-size: 100%;
 	display: inline-block;
 	text-align: center;
 }
+
 
 .GlobalWrite-card {
 	overflow: visible;

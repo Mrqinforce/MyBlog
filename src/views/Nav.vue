@@ -3,7 +3,7 @@
 		<div class="nav primary-fill shadow">
 			<div class="nav-bar">
 				<ul class="nav-list flex-around">
-					<li class="nav-item"><i class="iconfont">&#xe64e;</i></li>
+					<li class="nav-item"><i class="iconfont">&#xe611;</i></li>
 					<li class="nav-item"><router-link to="/index">主页</router-link></li>
 					<li class="nav-item"><input type="text" class="input-box" placeholder="搜索:请输入你想要的内容" v-model="keywords" /></li>
 					<li class="nav-item"><i class="iconfont" @click="search">&#xe601;</i></li>
@@ -58,11 +58,13 @@ export default {
 	margin-top: 80px;
 }
 @font-face {
-	font-family: 'iconfont'; /* project id 1434148 */
-	src: url('//at.alicdn.com/t/font_1434148_dvenubeepo8.eot');
-	src: url('//at.alicdn.com/t/font_1434148_dvenubeepo8.eot?#iefix') format('embedded-opentype'), url('//at.alicdn.com/t/font_1434148_dvenubeepo8.woff2') format('woff2'),
-		url('//at.alicdn.com/t/font_1434148_dvenubeepo8.woff') format('woff'), url('//at.alicdn.com/t/font_1434148_dvenubeepo8.ttf') format('truetype'),
-		url('//at.alicdn.com/t/font_1434148_dvenubeepo8.svg#iconfont') format('svg');
+  font-family: 'iconfont';  /* project id 1434148 */
+  src: url('//at.alicdn.com/t/font_1434148_qkwlcfrgblp.eot');
+  src: url('//at.alicdn.com/t/font_1434148_qkwlcfrgblp.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_1434148_qkwlcfrgblp.woff2') format('woff2'),
+  url('//at.alicdn.com/t/font_1434148_qkwlcfrgblp.woff') format('woff'),
+  url('//at.alicdn.com/t/font_1434148_qkwlcfrgblp.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_1434148_qkwlcfrgblp.svg#iconfont') format('svg');
 }
 .iconfont {
 	font-family: 'iconfont' !important;

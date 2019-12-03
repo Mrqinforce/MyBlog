@@ -1,4 +1,4 @@
-/* 字体设置 */
+/* 字体设置 p标签定义段落*/
 p {
 	font-size: 15px;
 	line-height: 50px;
@@ -6,7 +6,9 @@ p {
 }
 
 .title {
+	/* 指定字体的大小 */
 	font-size: 16px;
+	/* 指定了字体的粗细程度 */
 	font-weight: 600;
 	color: rgba(0, 0, 0, 0.7);
 }
@@ -14,12 +16,13 @@ p {
 .sub-title {
 	font-size: 15px;
 	color: rgba(0, 0, 0, 0.6);
+	/* 设置文本字符的间距 */
 	letter-spacing: 0.2px;
 }
 
 .meta {
 	font-size: 10px;
-	letter-spacing: 2px;
+	letter-spacing: 1px;
 }
 
 /* ---------主题设置----------- */
@@ -114,8 +117,8 @@ p {
 /* 头像样式 */
 .avatar-xs {
 	display: inline-block;
-	width: 35px;
-	height: 35px;
+	width: 50px;
+	height: 50px;
 	border-radius: 50%;
 }
 
@@ -215,23 +218,25 @@ p {
 /* 文章样式 */
 .media-wraaper {
 	display: flex;
+	/* min-height 通常用来设置一个元素的最小高度。这个属性（min-height）不允许一个元素的高度（height）小于这个元素指定的最小高度（min-height） */
 	min-height: 120px;
 	height: 230px;
-	margin: 10px;
+	margin: 15px;
 	border-radius: 5px;
 	padding: 10px;
 }
 
 .media-left {
-	flex: 1 1 18%;
+	flex: 1 1 15%;
+	/* 规定元素中的文本的水平对齐方式 */
 	text-align: center;
-	margin-right: 15px;	
+	margin-right: 20px;	
 }
 
 .media-middle {
 	flex: 1 1 60%;
-	margin-right: 20px;
-	margin-left: 20px;
+	margin-right: 15px;
+	margin-left: 15px;
 }
 
 .media-right {
@@ -257,8 +262,11 @@ p {
 	width: 100%;
 	height: 360px;
 	border: 1px solid #eee;
+	/* 圆角边框 */	
 	border-radius: 5px;
+	/* margin是指从自身边框到另一个容器边框之间的距离，就是容器外距离 */
 	margin: 20px;
+	/* padding是指自身边框到自身内部另一个容器边框之间的距离，就是容器内距离 */
 	padding: 10px;
 }
 
@@ -271,5 +279,6 @@ p {
 }
 
 .card>p {
-	line-height: 20px;
+	/* 设定line-height时，行内框的高度不变，改变的是行距。 */
+	line-height: 25px;
 }

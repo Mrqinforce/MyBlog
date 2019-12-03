@@ -63,7 +63,7 @@ export default {
 	-khtml-opacity: 0.5;
 	background-attachment: fixed;
 	position: absolute;
-	top: 400px;
+	top: 370px;
 	left: 60%;
 }
 .login-form {

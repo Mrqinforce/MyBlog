@@ -152,7 +152,7 @@ export default {
 	-khtml-opacity: 0.5;
 	position: absolute;
 	font-size: 15px;
-	top: 400px;
+	top: 350px;
 	left: 60%;
 }
 .login-form {
