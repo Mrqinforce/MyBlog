@@ -1,7 +1,6 @@
 <template>
 	<div>
 		<div class="back"><img src=../assets/img/background1.jpg /></div>
-		
 		<div class="row">
 			<div class="col-3" v-for="(item, index) in topics" :key="index">
 				<div class="card link shadow">
@@ -369,7 +368,11 @@
 								</div>
 							</div>
 						</div>
-					</div>				
+						<audio controls="controls">
+							<source src="../../music.mp3" type="audio/ogg" autoplay="autoplay" />
+						</audio>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -389,15 +392,23 @@ export default {
 		this.axios.get(this.GLOBAL.baseUrl + '/article').then(res => {
 			// console.log(res.data.data);
 			this.articles = res.data.data;
+			for (var i = 0; i < this.articles.length; i++) {
+				this.articles[i].thumbnail = this.getImage(this.articles[i].thumbnail);
+			}
 		});
 		this.axios.get(this.GLOBAL.baseUrl + '/user').then(res => {
-			// console.log(res.data.data);
+			console.log(res.data.data);
 			this.users = res.data.data;
 		});
 		this.axios.get(this.GLOBAL.baseUrl + '/topic').then(res => {
-			// console.log(res.data.data);
+			console.log(res.data.data);
 			this.topics = res.data.data;
 		});
+	},
+	methods: {
+		getImage(url) {
+			return 'https://images.weserv.nl/?url=' + url;
+		}
 	}
 };
 </script>
@@ -426,10 +437,14 @@ export default {
 .logo:hover {
 	opacity: 0.6;
 }
+audio {
+	background-color: rgb(245, 245, 240);
+}
 .time {
 	margin-left: 50px;
 	font-size: 13px;
 }
+
 .box {
 	display: flex;
 	justify-content: space-around;
@@ -448,7 +463,6 @@ export default {
 	display: inline-block;
 	text-align: center;
 }
-
 
 .GlobalWrite-card {
 	overflow: visible;

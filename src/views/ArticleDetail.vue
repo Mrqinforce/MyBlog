@@ -5,9 +5,8 @@
 			<img :src="articleVo.author.avatar" class="avatar-xs" />
 			<span class="meta gutter">{{ articleVo.author.nickname }}</span>
 			<span class="meta gutter">
-				{{ articleVo.article.createTime.date.year }}年{{ articleVo.article.createTime.date.month }}月{{ articleVo.article.createTime.date.day }}日 {{ articleVo.article.createTime.time.hour }}:{{
-					articleVo.article.createTime.time.minute
-				}}:{{ articleVo.article.createTime.time.second }}
+				{{ articleVo.article.createTime.date.year }}年{{ articleVo.article.createTime.date.month }}月{{ articleVo.article.createTime.date.day }}日
+				{{ articleVo.article.createTime.time.hour }}:{{ articleVo.article.createTime.time.minute }}:{{ articleVo.article.createTime.time.second }}
 			</span>
 		</div>
 		<div v-html="articleVo.article.content"></div>
@@ -34,9 +33,8 @@ export default {
 </script>
 
 <style scoped="scoped">
-	
-	.box{
-		height: 50px;
-		line-height: 50px;
-	}
+.box {
+	height: 50px;
+	line-height: 10px;
+}
 </style>
