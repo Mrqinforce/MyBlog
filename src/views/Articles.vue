@@ -17,9 +17,11 @@
 					</router-link>
 					<p class="sub-title link">{{ item.article.summary }}</p>
 					<p>
+						<router-link :to="{ path: '/article/' + item.article.id }">
 						<span class="meta">{{ item.article.comments }}评论</span>
-						<i class="iconfont">&#xe635;</i>
-						<span class="meta">  {{ item.article.likes }}喜欢</span>
+						<i class="iconfont" style="color: #000000;">&#xe635;</i>
+						</router-link>
+						<span class="meta">{{ item.article.likes }}喜欢</span>
 						<i class="iconfont" style="color: rgb(255, 50, 0);">&#xe602;</i>
 					</p>
 					<span class="time">发表时间：{{ item.article.createTime.date.year }}年{{ item.article.createTime.date.month }}月{{ item.article.createTime.date.day }}日</span>

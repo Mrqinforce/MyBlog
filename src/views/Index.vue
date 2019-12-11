@@ -31,7 +31,9 @@
 							<p class="sub-title link">{{ item.article.summary }}</p>
 							<p>
 								<span class="meta">{{ item.article.comments }}评论</span>
-								<i class="iconfont gutter">&#xe635;</i>
+								<router-link :to="{ path: '/article/' + item.article.id }">
+								<i class="iconfont gutter" style="color: #000000;">&#xe635;</i>
+								</router-link>
 								<span class="meta ">转发</span>
 								<i class="iconfont meta gutter ">&#xe920;</i>
 								<span class="meta">{{ item.article.likes }}喜欢</span>

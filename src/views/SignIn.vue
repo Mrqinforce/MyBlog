@@ -1,6 +1,6 @@
 <template>
 	<div id="bg">
-		<router-link to="/">返回</router-link>
+		<router-link to="/">返回主页</router-link>
 		<div class="login-box">
 			<form class="login-form">
 				<input type="text" v-model="userDto.mobile" id="mobile" />
