@@ -219,6 +219,7 @@
 </template>
 
 <script>
+	
 export default {
 	data() {
 		return {
@@ -237,9 +238,116 @@ export default {
 	},
 	methods: {}
 };
+
 </script>
 
 <style scoped="scoped">
+	.preview-box {
+		width: 100px;
+		height: 100px;
+		border: 1px dashed #aaa;
+		position: relative;
+		top: -10px;
+		left: 0px;
+	
+	}
+	
+	.preview-box img {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+	
+	}
+	
+	.select-file {
+		position: absolute;
+		top: 0;
+		left: 0;
+		height: 100%;
+		width: 100%;
+		opacity: 0;
+		z-index: 9999;
+		cursor: pointer;
+	}
+	
+	.carousel-wrap {
+		position: relative;
+		width: 72%;
+		height: 380px;
+		overflow: hidden;
+		left: 200px;
+	
+	}
+	
+	.slide-ul {
+		width: 100%;
+		height: 100%;
+	}
+	
+	.slide-ul li {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+	}
+	
+	.slide-ul li img {
+		width: 100%;
+		height: 100%;
+	}
+	
+	.carousel-items {
+		z-index: 100;
+		position: relative;
+		top: -80px;
+		text-align: center;
+		font-size: 0;
+	}
+	
+	.carousel-items span {
+		display: inline-block;
+		width: 50px;
+		height: 6px;
+		margin: 0 5px;
+		background-color: #eee;
+		cursor: pointer;
+	}
+	
+	.carousel-items .active {
+		background-color: #FFA500;
+	}
+	
+	/* 动画 */
+	.slide-enter-to {
+		transition: all 1s ease;
+		transform: translateX(0);
+	}
+	
+	.slide-leave-active {
+		transition: all 1s ease;
+		transform: translateX(-100%)
+	}
+	
+	.slide-enter {
+		transform: translateX(100%)
+	}
+	
+	.slide-leave {
+		transform: translateX(0)
+	}
+	
+	.card-wrap {
+		display: flex;
+		width: 28%;
+		flex-wrap: wrap;
+	}
+	
+	.card {
+		flex: 0 0 28%;
+	}
 .main-top .info {
 	margin-top: 5px;
 	padding-left: 100px;

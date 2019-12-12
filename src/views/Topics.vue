@@ -1,22 +1,21 @@
 <template>
 	<div>
-		<div class="row">
-			<div v-for="(item, index) in topics" :key="index" class="col-4 flex flex-center">
-				<div class="card shadow flex flex-top-y">
-					<div class="card-head flex flex-center">
-						<p class="title">{{ item.topicName }}</p>
-						<img :src="item.logo"/>
-					</div>
-					<div class="card-body flex flex-left">
-						<p class="sub-title">{{ item.description.slice(0,30) }}</p>
-						<p class="meta">{{ item.articles }}篇文章，{{ item.fans }}人关注</p>
-					</div>
-					<div><a :href="item.homepage" class="link" @click="go(item.homepage)">专题主页</a></div>
-				</div>
-			</div>
-		</div>
-		<div class="row"><button class="btn btn-lg btn-rd dark-fill" @click="loadMore">点击加载更多</button></div>
+	<div class="row">
+	<div class="box col-3" v-for="(item, index) in topics" :key="index">
+	    <img :src="item.logo">
+	    <div class="box-content">
+	        <h3 class="title">专题:{{ item.topicName }}</h3>
+	        <p class="description">
+	            <p>简介:{{ item.description }}</p>
+	            <p>{{ item.articles }}篇文章，{{ item.follows }}人关注</p>
+	        </p>
+	        <div><a :href="item.homepage" class="link" @click="go(item.homepage)">专题主页</a></div>
+	    </div>
+	</div>  	 
 	</div>
+	 <div class="row">
+		 <button class="btn btn-lg btn-rd dark-fill" @click="loadMore">点击加载更多</button></div>
+	 </div>
 </template>
 
 <script>
@@ -63,41 +62,93 @@ export default {
 		},
 		go(page) {
 			window.location.href = page;
+		},
+	},
+	computed: {
+		// 解决403图片缓存问题
+		getImages(_url) {
+			if (_url) {
+				let _u = _url.substring(8);
+				return 'https://images.weserv.nl/?url=' + _u;
+			}
 		}
 	}
 };
 </script>
+
 <style scoped>
-.card {
-	width: 90%;
-	height: 300px;
-	background-color: #2C3E50;
-	background-size: 100%, 100%;
-	margin-bottom: 50px;
-	padding: 20px;
-}
-.card-head {
-	height: 30%;
-	padding: 10px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-.card-head img {
-	width: 80px;
-	height: 80px;
-	border-radius: 10px;
-	margin-left: 20px;
-}
-.card-body {
-	width: 80%;
-	margin: 0 auto;
-}
-.card-body > p {
-	line-height: 30px;
-}
-.card a {
-	color: rgb(0, 98, 89);
-	font-weight: 700;
-}
+	.row{
+		margin-top: 80px;
+	}
+	.box{
+	    background: #fff;
+	    box-shadow: 0 0 5px #bababa;
+	    text-align: center;
+	    overflow: hidden;
+	    position: relative;
+		padding: 10px;
+		margin: 40px;
+		width: 150px;
+		height: 400px;
+	}
+	.box img{
+	    width: 100%;
+	    height: 100%;
+	    transition: all 0.4s ease-in-out 0.2s;
+	}
+	.box:hover img{
+	    transform: scale(0);
+	    transition-delay: 0s;
+	}
+	.box .box-content{
+	    width: 100%;
+	    height: 100%;
+	    background: #425770;
+	    color: #fff;
+	    padding: 30px;
+	    position: absolute;
+	    top: 0;
+	    left: 0;
+	    opacity: 0;
+	    transform: scale(0) rotate(-180deg);
+	    transition: all 0.4s ease-in 0s;
+		margin-bottom: 20px;
+	}
+	.box:hover .box-content{
+	    opacity: 1;
+	    transform: scale(1) rotate(0deg);
+	    transition-delay: 0.2s;
+	}
+	.box .title{
+	    font-size: 20px;
+	    font-weight: 800;
+	    border-bottom: 1px solid #334a65;
+	    padding-bottom: 10px;
+	    margin-top: 0;
+	    text-transform: capitalize;
+	}
+	.box .description{
+	    font-size: 13px;
+	    font-style: italic;
+	    line-height: 20px;
+	    margin-bottom: 30px;
+	}
+	.box .read{
+		margin-top: 70px;
+	    display: inline-block;
+	    font-size: 14px;
+	    color: #fff;
+	    background: #132d4d;
+	    padding: 7px 20px;
+	    text-transform: capitalize;
+	}
+	@media only screen and (max-width: 990px){
+	    .box{ margin-bottom: 20px; }
+	}
+	@media only screen and (max-width: 479px){
+	    .box .box-content{ padding: 20px; }
+	}
+	@media only screen and (max-width: 359px){
+	    .box .box-content{ padding: 10px; }
+	}                    
 </style>

@@ -430,7 +430,7 @@ export default {
 	-webkit-font-smoothing: antialiased;
 	-webkit-text-stroke-width: 0.4px;
 	-moz-osx-font-smoothing: grayscale;
-}
+} 
 .back img {
 	width: 100%;
 	height: 800px;

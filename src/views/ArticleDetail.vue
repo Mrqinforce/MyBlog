@@ -72,8 +72,9 @@ export default {
 
 <style scoped="scoped">
 .aaa {
-	width: 100px;
-	height: 140px;
+	flex: 1 1 20%;
+	width: 100%;
+	margin-top: 280px;
 }
 .container {
 	margin-top: 80px;
@@ -85,12 +86,24 @@ export default {
 .btn-round {
 	background-color: #2c3e50;
 	color: #ffffff;
-	border-radius: 50%;
-	height: 50px;
-	width: 40px;
+	border-radius: 20%;
+	height: 80px;
+	width:60px;
+	margin-left: 5px;
 }
 .box {
 	height: 50px;
 	line-height: 10px;
+}
+.card {
+	width: 1000px;
+	height: 150px;
+	border: 1px solid #E6E6E6;
+	/* 圆角边框 */	
+	border-radius: 5px;
+	/* margin是指从自身边框到另一个容器边框之间的距离，就是容器外距离 */
+	margin: 30px;
+	/* padding是指自身边框到自身内部另一个容器边框之间的距离，就是容器内距离 */
+	padding: 20px;
 }
 </style>
