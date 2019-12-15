@@ -13,14 +13,14 @@
 		<fieldset>
 			<legend>评论</legend>
 			<div class="card" v-for="(item, index) in comment" :key="index">
-				<div class="avatar-xs"><img :src="item.author.avatar" alt="头像" class="avatar" />
-				</div>
+				<div class="avatar-xs"><img :src="item.author.avatar" alt="头像" class="avatar" /></div>
 				<p class="sub-title">{{ item.author.nickname }}</p>
 				<p class="meta">
 					{{ item.comment.createTime.date.year }}年{{ item.comment.createTime.date.month }}月{{ item.comment.createTime.date.day }}日
 					{{ item.comment.createTime.time.hour }}:{{ item.comment.createTime.time.minute }}:{{ item.comment.createTime.time.second }}
 				</p>
 				<p>{{ item.comment.content }}</p>
+				<button class="del" @click="del(item.comment.id)">删除</button>
 			</div>
 			<div class="aaa">
 				<input type="text" style="height: 80px; width: 400px;" v-model="writeComment.content" />
@@ -64,6 +64,13 @@ export default {
 				// alert(res.data.msg);
 				this.$router.go(0);
 			});
+		},
+		del(id) {
+			alert(id);
+			this.axios.delete(this.GLOBAL.baseUrl + '/comments/delete/' + id).then(res => {
+				this.$router.go(0);
+			});
+			alert('删除成功');
 		}
 	},
 	computed: {}
@@ -88,7 +95,7 @@ export default {
 	color: #ffffff;
 	border-radius: 20%;
 	height: 80px;
-	width:60px;
+	width: 60px;
 	margin-left: 5px;
 }
 .box {
@@ -98,12 +105,22 @@ export default {
 .card {
 	width: 1000px;
 	height: 150px;
-	border: 1px solid #E6E6E6;
-	/* 圆角边框 */	
+	border: 1px solid #e6e6e6;
+	/* 圆角边框 */
 	border-radius: 5px;
 	/* margin是指从自身边框到另一个容器边框之间的距离，就是容器外距离 */
 	margin: 30px;
 	/* padding是指自身边框到自身内部另一个容器边框之间的距离，就是容器内距离 */
 	padding: 20px;
+}
+.del {
+	width: 50px;
+	height: 25px;
+	font-size: 14px;
+	font-family: '微软雅黑';
+	color: black;
+	float: right;
+	margin-top: 10px;
+	margin-right: 10px;
 }
 </style>
