@@ -388,6 +388,7 @@ export default {
 			articles: [],
 			users: [],
 			topics: []
+			
 		};
 	},
 	created() {

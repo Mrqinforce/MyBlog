@@ -3,7 +3,7 @@
 		<div class="main-top  col-12 flex ">
 			<img :src="userVo.user.avatar" class="avatar" />
 			<p>{{ userVo.user.nickname }}</p>
-			<button data-v-6292e408="" class="off  user-follow-button">
+			<button data-v-6292e408="" class="off user-follow-button">
 				<i data-v-6292e408="" class="iconfont"></i>
 				<span data-v-6292e408="">关注</span>
 			</button>
@@ -61,6 +61,29 @@
 			</div>
 			
 		</div>
+		<div class="imf">
+			<p>电子邮箱：2623327266@qq.com</p>
+			<p>QQ号：2673327266</p>
+			<p>电话号码:18805167526</p>
+			<p>个人主页：{{ userVo.user.homepage }}</p>
+			<p>家庭住址：{{ userVo.user.address }}</p>
+			<p>出生日期：{{ userVo.user.birthday.year }}年{{ userVo.user.birthday.month }}月{{ userVo.user.birthday.day }}日</p>
+			</div>
+		<ul class="title link">
+					<li class="nav-item border-bottom" v-on:click="changeshow()">写文章</li>
+					<li class="nav-item border-bottom" v-on:click="changeshow()">修改个人资料</li>
+	  </ul>	
+	  <div class="alter" v-if="!show">
+	  		<input type="text" placeholder="昵称" v-model="alteruser.nickname">
+	  		<input type="text" placeholder="性别" v-model="alteruser.gender">
+	  		<!-- <input type="text" placeholder="生日" v-model="alteruser.birthday"> -->
+	  		<input type="text" placeholder="地址" v-model="alteruser.address">
+	  		<input type="text" placeholder="简介" v-model="alteruser.introduction">
+	  		<input type="text" placeholder="主页" v-model="alteruser.homepage">
+	  		<input type="text" placeholder="id" v-model="user.id">
+	  		<button v-on:click="alter()">确定</button>
+	  	</div>
+	  	
 		<ul class="list user-dynamic col-4">
 			<li class="badge-icon">
 				<a target="_blank" href="https://www.jianshu.com/mobile/campaign/stories2018">
@@ -223,20 +246,61 @@
 export default {
 	data() {
 		return {
+			user: JSON.parse(localStorage.getItem('user')),
 			userVo: {
 				user: {},
 				articleList: {}
-			}
+			},
+			// writeArticle: {
+			// 				topicId:'',
+			// 				userId: '',
+			// 				title:'',
+			// 				content: '',
+			// 				cover:'',
+			// 				diamond:0,
+			// 				comments:0,
+			// 				likes:0,
+			// 				text:''
+			// 			},
+						show:'true',
+						watch:'true',
+			alteruser:{
+						 nickname: '',
+			    		 gender : '',
+						 // birthday : '',
+						 address : '',
+						 introduction: '',
+						 homepage: '',
+						 id: ''
+							}
 		};
 	},
 	created() {
+		var query = window.location.href;
+		//锁定到最后一个"/"的位置
+		var begin = query.lastIndexOf('/') + 1;
+	    //取出地址中最后的id值
+		var usersId = query.substring(begin);
 		var id = this.$route.params.id;
 		this.axios.get(this.GLOBAL.baseUrl + '/user/' + id).then(res => {
 			console.log(res.data.data);
 			this.userVo = res.data.data;
 		});
 	},
-	methods: {}
+	methods: {
+		alter(){
+					this.alteruser.id = this.user.id;
+					alert(this.user.id)
+					this.axios.post(this.GLOBAL.baseUrl + '/user/alter', this.alteruser)
+						.then(res => {
+							this.$router.go(0);
+						});
+						alert("成功")
+				},
+		changeshow(){			
+					this.show=!this.show;
+				},
+	}
 };
 
 </script>

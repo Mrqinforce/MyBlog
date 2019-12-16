@@ -29,8 +29,10 @@
 								</router-link>
 								<p class="sub-title link">{{ item.article.summary }}</p>
 								<p>
-									<span class="meta gutter">{{ item.article.comments }}评论</span>
+									<span class="meta ">{{ item.article.comments }}评论</span>
+									<i class="iconfont" style="color: #000000;">&#xe635;</i>
 									<span class="meta">{{ item.article.likes }}喜欢</span>
+									<i class="iconfont" style="color: rgb(255, 50, 0);">&#xe602;</i>
 								</p>
 							</div>
 							<div class="media-right"><img :src="item.article.thumbnail" alt="" /></div>
@@ -42,7 +44,7 @@
 				<div class="box border-bottom">
 					<p class="title">专题公告</p>
 					<p class="sub-title">{{ topicVo.topic.description }}</p>
-					<p>
+					<p class="title">专题主页
 						<a :href="topicVo.homepage">{{ topicVo.topic.homepage }}</a>
 					</p>
 				</div>
@@ -88,5 +90,24 @@ export default {
 }
 .box > p {
 	line-height: 20px;
+}
+@font-face {
+	font-family: 'iconfont'; /* project id 1434148 */
+	src: url('//at.alicdn.com/t/font_1434148_os48i7mdre.eot');
+	src: url('//at.alicdn.com/t/font_1434148_os48i7mdre.eot?#iefix') format('embedded-opentype'), url('//at.alicdn.com/t/font_1434148_os48i7mdre.woff2') format('woff2'),
+		url('//at.alicdn.com/t/font_1434148_os48i7mdre.woff') format('woff'), url('//at.alicdn.com/t/font_1434148_os48i7mdre.ttf') format('truetype'),
+		url('//at.alicdn.com/t/font_1434148_os48i7mdre.svg#iconfont') format('svg');
+}
+.iconfont {
+	font-family: 'iconfont' !important;
+	font-size: 18px;
+	font-style: normal;
+	-webkit-font-smoothing: antialiased;
+	-webkit-text-stroke-width: 0.4px;
+	-moz-osx-font-smoothing: grayscale;
+}
+.meta {
+	margin-right: 3px;
+	margin-left: 10px;
 }
 </style>

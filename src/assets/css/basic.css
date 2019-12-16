@@ -163,7 +163,7 @@ a:active {
 
 
 .flex-center-y {
-	display: flex ;
+	display: flex;
 	/* flex-direction规定灵活项目的方向 */
 	/* 灵活的项目将垂直显示，正如一个列一样。 */
 	flex-direction: column;

@@ -79,6 +79,14 @@ export default {
 	width: 90%;
 	height: 470px;
 	background-color: #2C3E50;
+	border-radius: 5%;
 	font-weight: 700;
+}
+.card img {
+	border-radius: 60%;
+	width: 100%;
+	height: 72%;
+	/* border-top-left-radius: 5px;
+	border-bottom-right-radius: 5px; */
 }
 </style>
