@@ -73,6 +73,22 @@
 					<li class="nav-item border-bottom" v-on:click="changeshow()">写文章</li>
 					<li class="nav-item border-bottom" v-on:click="changeshow()">修改个人资料</li>
 	  </ul>	
+	  <div class="writearticle border" v-if="!show">
+	  		<span style="color: white;">作者ID: {{this.user.id}} </span>			
+	  		<div class="con">
+	  			<div class="con-head">
+	  				<input type="text" placeholder="标题:" v-model="writeArticle.title">
+	  				<input type="text" placeholder="简介:" v-model="writeArticle.summary">
+	  				<input type="text" placeholder="专题ID::" v-model="writeArticle.topicId">
+	  				<input type="text" placeholder="输入图片地址:" v-model="writeArticle.thumbnail">
+	  			</div>
+	  			<div class="con-body">				
+	  				<textarea rows="10" cols="30" placeholder="内容:" v-model="writeArticle.content"></textarea>
+	  				<button @click="changeshow()" v-on:click="release">发布</button>
+	  			</div>
+	  		</div>       						
+	  	</div>
+	  	
 	  <div class="alter" v-if="!show">
 	  		<input type="text" placeholder="昵称" v-model="alteruser.nickname">
 	  		<input type="text" placeholder="性别" v-model="alteruser.gender">
@@ -251,17 +267,17 @@ export default {
 				user: {},
 				articleList: {}
 			},
-			// writeArticle: {
-			// 				topicId:'',
-			// 				userId: '',
-			// 				title:'',
-			// 				content: '',
-			// 				cover:'',
-			// 				diamond:0,
-			// 				comments:0,
-			// 				likes:0,
-			// 				text:''
-			// 			},
+			writeArticle: {
+							topicId:'',
+							userId: '',
+							title:'',
+							summary: '',
+							thumbnail:'',
+							comments:0,
+							content:'',
+							likes:0
+							
+						},
 						show:'true',
 						watch:'true',
 			alteruser:{
@@ -297,6 +313,18 @@ export default {
 						});
 						alert("成功")
 				},
+				release() {
+							if(this.writeArticle.text==''||this.writeArticle.text==''||this.writeArticle.content==''||this.writeArticle.topicId==''){
+								alert("类容不能为空")
+								return;
+							}			
+							this.writeArticle.userId= this.user.id;
+							this.axios.post(this.GLOBAL.baseUrl + '/article', this.writeArticle)
+							.then(res => {
+								this.$router.go(0);
+							});
+							alert("发布成功")
+						},
 		changeshow(){			
 					this.show=!this.show;
 				},
@@ -306,6 +334,10 @@ export default {
 </script>
 
 <style scoped="scoped">
+	.writearticle{
+			padding: 20px;
+			height: 800px;
+		}
 	.preview-box {
 		width: 100px;
 		height: 100px;
