@@ -1,14 +1,9 @@
 <template>
 	<div class="container">
 		<div class="main-top  col-12 flex ">
+			<div class="col-8">
 			<img :src="userVo.user.avatar" class="avatar" />
 			<p>{{ userVo.user.nickname }}</p>
-			<button data-v-6292e408="" class="off user-follow-button">
-				<i data-v-6292e408="" class="iconfont"></i>
-				<span data-v-6292e408="">关注</span>
-			</button>
-			<a class="btn btn-hollow" href="/notifications#/chats/new?mail_to=7133325">发简信</a>
-
 			<div class="title"><i class="iconfont ic-man"></i></div>
 			<div class="info">
 				<ul>
@@ -59,9 +54,8 @@
 					</li>
 				</ul>
 			</div>
-			
 		</div>
-		<div class="imf">
+		<div class="imf col-4">
 			<p>电子邮箱：2623327266@qq.com</p>
 			<p>QQ号：2673327266</p>
 			<p>电话号码:18805167526</p>
@@ -73,13 +67,14 @@
 					<li class="nav-item border-bottom" v-on:click="changeshow()">写文章</li>
 					<li class="nav-item border-bottom" v-on:click="changeshow()">修改个人资料</li>
 	  </ul>	
+	  </div>
 	  <div class="writearticle border" v-if="!show">
-	  		<span style="color: white;">作者ID: {{this.user.id}} </span>			
+	  		<span style="color: black;">作者ID: {{this.user.id}} </span>			
 	  		<div class="con">
 	  			<div class="con-head">
 	  				<input type="text" placeholder="标题:" v-model="writeArticle.title">
 	  				<input type="text" placeholder="简介:" v-model="writeArticle.summary">
-	  				<input type="text" placeholder="专题ID::" v-model="writeArticle.topicId">
+	  				<input type="text" placeholder="专题ID:" v-model="writeArticle.topicId">
 	  				<input type="text" placeholder="输入图片地址:" v-model="writeArticle.thumbnail">
 	  			</div>
 	  			<div class="con-body">				
@@ -92,7 +87,6 @@
 	  <div class="alter" v-if="!show">
 	  		<input type="text" placeholder="昵称" v-model="alteruser.nickname">
 	  		<input type="text" placeholder="性别" v-model="alteruser.gender">
-	  		<!-- <input type="text" placeholder="生日" v-model="alteruser.birthday"> -->
 	  		<input type="text" placeholder="地址" v-model="alteruser.address">
 	  		<input type="text" placeholder="简介" v-model="alteruser.introduction">
 	  		<input type="text" placeholder="主页" v-model="alteruser.homepage">
@@ -124,9 +118,9 @@
 			<div class="col-8">
 				<div class="col-12" v-for="(item, index) in userVo.articleList" :key="index">
 					<div class="media-wraaper shadow">
-						<div class="media-left"><img :src="item.article.thumbnail" class="thumnail-xs" /></div>
+						<div class="media-left"><img :src="getImages(item.article.thumbnail)" class="thumnail-xs" /></div>
 						<div class="media-middle">
-							<p class="title">{{ item.article.title }}</p>
+							<p class="title link" @click="toDetail(item.article.id)">{{ item.article.title }}</p>
 							<p class="sub-title">{{ item.article.summary }}</p>
 						</div>
 					</div>
@@ -315,7 +309,7 @@ export default {
 				},
 				release() {
 							if(this.writeArticle.text==''||this.writeArticle.text==''||this.writeArticle.content==''||this.writeArticle.topicId==''){
-								alert("类容不能为空")
+								alert("内容不能为空")
 								return;
 							}			
 							this.writeArticle.userId= this.user.id;
@@ -328,6 +322,15 @@ export default {
 		changeshow(){			
 					this.show=!this.show;
 				},
+				getImages(_url) {
+							if (_url) {
+								let _u = _url.substring(8);
+								return 'https://images.weserv.nl/?url=' + _u;
+							}
+						},
+						toDetail(id) {
+									this.$router.push('/article/' + id);
+								},
 	}
 };
 
@@ -338,6 +341,130 @@ export default {
 			padding: 20px;
 			height: 800px;
 		}
+	.con-head{
+		display: flex;
+		flex-direction: column;
+		margin-bottom: 20px;
+	}
+	 .con-head input{
+		width: 500px;
+		height: 40px;
+		margin-top: 20px;
+	}
+	.con-body{
+		width: 500px;
+		height: 40px;
+		margin-top: 20px;
+	}
+	.con-body textarea{
+		width: 800px;
+		height: 100px;
+		margin-top: 30px;
+		margin-bottom: 30px;
+	}
+	.con-body button{			
+		width: 100px;
+		height: 40px;
+		background-color: rgb(242, 242, 242);
+	}
+.all {
+	background-image: url('https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1152000485,3169834010&fm=26&gp=0.jpg');
+	background-size: calc(100%);
+}
+.banner {
+	width: 100%;
+	height: 200px;
+	margin-top: 50px;
+	padding-bottom: 40px;
+}
+.cover {
+	width: 90%;
+	height: 100%;
+	margin-left: 38px;
+}
+.love {
+	display: flex;
+	flex-flow: column;
+	margin-top: 20px;
+}
+.ku {
+	margin-top: 50px;
+	margin-right: 10px;
+}
+.lab {
+	height: 50px;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	margin-top: 5px;
+	background-color: wheat;
+}
+.lab p {
+	font-size: 30px;
+	font-weight: 600;
+	color: white;
+}
+.first {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+.first img {
+	border: 2px solid #fff;
+}
+.ku p {
+	margin-bottom: 10px;
+}
+.row {
+	display: flex;
+	margin-top: -50px;
+	flex-wrap: wrap;
+}
+.zh-navs {
+	height: 70px;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: 999;
+	background-color: rgba(172, 91, 155);
+	cursor: pointer;
+}
+.changeBox {
+	display: flex;
+} 
+.tui {
+	cursor: pointer;
+	margin-left: 30px;
+	padding-top: 7px;
+}
+.zh-containers {
+	width: 80%;
+	margin: auto;
+	margin-top: 100px;
+}
+.nav-item {
+	height: 70px;
+	line-height: 70px;
+} 
+/* 下边框 */
+	.border-bottom {
+	border-bottom: 1px solid #ddd;
+	padding-bottom: 20px;
+}
+.zh-avatars {
+	width: 100px;
+	height: 100px;
+	border-radius: 50%;
+	cursor: pointer;
+}
+.thumnail-xs {
+	width: 150px;
+	height: 150px;
+	border-radius: 10px;
+}
 	.preview-box {
 		width: 100px;
 		height: 100px;
@@ -416,7 +543,7 @@ export default {
 		background-color: #FFA500;
 	}
 	
-	/* 动画 */
+	动画
 	.slide-enter-to {
 		transition: all 1s ease;
 		transform: translateX(0);
@@ -488,7 +615,7 @@ audio {
 	height: 100%;
 	border-radius: 10px;
 }
-/* .infoo {
+.infoo {
 	position: relative;
 	top: 10px;
 	left: -500px;
@@ -500,7 +627,7 @@ audio {
 	margin: 0 auto;
 	text-align: center;
 	border-radius: 20px;
-} */
+}
 .main-top .info {
 	margin-top: 5px;
 	padding-left: 100px;
