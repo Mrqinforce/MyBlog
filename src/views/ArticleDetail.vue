@@ -24,7 +24,7 @@
 			</div>
 			<div class="aaa">
 				<input type="text" style="height: 80px; width: 400px;" v-model="writeComment.content" />
-				<button class=" btn-round" @click="release">发布</button>
+				<button class=" btn-round link" @click="release()">发布</button>
 			</div>
 		</fieldset>
 	</div>

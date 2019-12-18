@@ -18,11 +18,12 @@
 					<p class="sub-title link">{{ item.article.summary }}</p>
 					<p>
 						<router-link :to="{ path: '/article/' + item.article.id }">
-						<span class="meta">{{ item.article.comments }}评论</span>
-						<i class="iconfont" style="color: #000000;">&#xe635;</i>
+							<span class="meta">{{ item.article.comments }}评论</span>
+							<i class="iconfont" style="color: #000000;" >&#xe635;</i>
 						</router-link>
-						<span class="meta">{{ item.article.likes }}喜欢</span>
-						<i class="iconfont" style="color: rgb(255, 50, 0);">&#xe602;</i>
+						<span class="meta" >{{ item.article.likes }}喜欢</span>
+						<i class="iconfont link" style="color: rgb(255, 50, 0);" @click="addLike(item.article.id)">&#xe602;</i>
+						<i class="iconfont link" style="margin-left: 20px;" @click="cancelLike(item.article.id)">&#xe60c;</i>
 					</p>
 					<span class="time">发表时间：{{ item.article.createTime.date.year }}年{{ item.article.createTime.date.month }}月{{ item.article.createTime.date.day }}日</span>
 				</div>
@@ -38,10 +39,16 @@
 export default {
 	data() {
 		return {
+			user: JSON.parse(localStorage.getItem('user')),
 			articles: [],
 			currentPage: 1,
-			count: 20
+			count: 20,
+			like: {
+					userId: 0,
+					articleId:0
+						}
 		};
+		
 	},
 	created() {
 		this.axios
@@ -57,6 +64,18 @@ export default {
 			});
 	},
 	methods: {
+		addLike(id) {
+					this.like.userId = this.user.id;
+					this.like.articleId = id;
+					this.axios
+					.post(this.GLOBAL.baseUrl + '/like', this.like)
+					.then(res => {
+						
+						this.$router.go(0);
+					});
+					alert('ok');
+
+				},
 		loadMore() {
 			this.currentPage = this.currentPage + 1;
 			this.axios
@@ -75,8 +94,20 @@ export default {
 					}
 					console.log(this.articles.length);
 				});
-		}
-	}
+		},
+		
+		cancelLike(id) {
+			this.axios.delete(this.GLOBAL.baseUrl + '/like',{
+				params: {
+					userId: this.user.id,
+					articleId: id
+				}
+			}).then(res => {
+				this.$router.go(0);
+			});
+			alert('ok');
+		},
+	},
 };
 </script>
 
@@ -86,11 +117,13 @@ export default {
 	background-position-y: 100px;
 }
 @font-face {
-	font-family: 'iconfont'; /* project id 1434148 */
-	src: url('//at.alicdn.com/t/font_1434148_os48i7mdre.eot');
-	src: url('//at.alicdn.com/t/font_1434148_os48i7mdre.eot?#iefix') format('embedded-opentype'), url('//at.alicdn.com/t/font_1434148_os48i7mdre.woff2') format('woff2'),
-		url('//at.alicdn.com/t/font_1434148_os48i7mdre.woff') format('woff'), url('//at.alicdn.com/t/font_1434148_os48i7mdre.ttf') format('truetype'),
-		url('//at.alicdn.com/t/font_1434148_os48i7mdre.svg#iconfont') format('svg');
+  font-family: 'iconfont';  /* project id 1434148 */
+  src: url('//at.alicdn.com/t/font_1434148_c3p2ptu9yd.eot');
+  src: url('//at.alicdn.com/t/font_1434148_c3p2ptu9yd.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_1434148_c3p2ptu9yd.woff2') format('woff2'),
+  url('//at.alicdn.com/t/font_1434148_c3p2ptu9yd.woff') format('woff'),
+  url('//at.alicdn.com/t/font_1434148_c3p2ptu9yd.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_1434148_c3p2ptu9yd.svg#iconfont') format('svg');
 }
 .iconfont {
 	font-family: 'iconfont' !important;
