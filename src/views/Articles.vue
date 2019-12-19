@@ -15,7 +15,7 @@
 							{{ item.article.title }}
 						</p>
 					</router-link>
-					<p class="sub-title link">{{ item.article.summary }}</p>
+					<p class="sub-title">{{ item.article.summary }}</p>
 					<p>
 						<router-link :to="{ path: '/article/' + item.article.id }">
 							<span class="meta">{{ item.article.comments }}评论</span>

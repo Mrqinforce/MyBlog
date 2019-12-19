@@ -3,7 +3,11 @@
 		<div class="nav primary-fill shadow">
 			<div class="nav-bar">
 				<ul class="nav-list flex-around">
-					<li class="nav-item"><i class="iconfont">&#xe611;</i></li>
+					<li class="nav-item link">
+						<router-link to="/setting">
+						<i class="iconfont">&#xe611;</i>
+						</router-link>
+						</li>
 					<li class="nav-item"><router-link to="/index">主页</router-link></li>
 					<li class="nav-item"><input type="text" class="input-box" placeholder="搜索:请输入你想要的内容" v-model="keywords" /></li>
 					<li class="nav-item"><i class="iconfont" @click="search">&#xe601;</i></li>

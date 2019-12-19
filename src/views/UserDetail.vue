@@ -1,10 +1,12 @@
 <template>
 	<div class="container">
-		<div class="main-top  col-12 flex ">
-			<div class="col-8">
-			<img :src="userVo.user.avatar" class="avatar" />
+		<div class="main-top  col-12 ">
+			<div class="row flex flex-left">
+			<div class="col-8 ">
+			<img :src="userVo.user.avatar" class="avatar-xs" />
 			<p>{{ userVo.user.nickname }}</p>
-			<div class="title"><i class="iconfont ic-man"></i></div>
+			
+			<!-- <div class="title"><i class="iconfont ic-man"></i></div>
 			<div class="info">
 				<ul>
 					<li>
@@ -53,45 +55,36 @@
 						</div>
 					</li>
 				</ul>
-			</div>
+			</div> -->
 		</div>
-		<div class="imf col-4">
-			<p>电子邮箱：2623327266@qq.com</p>
-			<p>QQ号：2673327266</p>
-			<p>电话号码:18805167526</p>
-			<p>个人主页：{{ userVo.user.homepage }}</p>
-			<p>家庭住址：{{ userVo.user.address }}</p>
-			<p>出生日期：{{ userVo.user.birthday.year }}年{{ userVo.user.birthday.month }}月{{ userVo.user.birthday.day }}日</p>
+		
 			</div>
-		<ul class="title link">
-					<li class="nav-item border-bottom" v-on:click="changeshow()">写文章</li>
-					<li class="nav-item border-bottom" v-on:click="changeshow()">修改个人资料</li>
+		<ul class="btn link">
+			<button class="nav-item  btn-lg btn-circle " v-on:click="change()"><i class="iconfont">&#xe605;</i>写文章</button>
+					
 	  </ul>	
+	  <div class="   ">
+	  	<p>电子邮箱：{{userVo.user.email}}</p>
+	  	<p>性别：{{userVo.user.gender}}</p>
+	  	<p>简介：{{userVo.user.introduction}}</p>
+	  	<p>家庭住址：{{ userVo.user.address }}</p>
+	  	<p>出生日期：{{ userVo.user.birthday.year }}年{{ userVo.user.birthday.month }}月{{ userVo.user.birthday.day }}日</p>
+	  	</div>
 	  </div>
-	  <div class="writearticle border" v-if="!show">
-	  		<span style="color: black;">作者ID: {{this.user.id}} </span>			
+	  
+	  <div class="writearticle border" v-if="show">
 	  		<div class="con">
 	  			<div class="con-head">
 	  				<input type="text" placeholder="标题:" v-model="writeArticle.title">
 	  				<input type="text" placeholder="简介:" v-model="writeArticle.summary">
 	  				<input type="text" placeholder="专题ID:" v-model="writeArticle.topicId">
-	  				<input type="text" placeholder="输入图片地址:" v-model="writeArticle.thumbnail">
+	  				<input type="text" placeholder="图片地址:" v-model="writeArticle.thumbnail">
 	  			</div>
 	  			<div class="con-body">				
 	  				<textarea rows="10" cols="30" placeholder="内容:" v-model="writeArticle.content"></textarea>
-	  				<button @click="changeshow()" v-on:click="release">发布</button>
+	  				<button @click="change()" v-on:click="release">发布</button>
 	  			</div>
 	  		</div>       						
-	  	</div>
-	  	
-	  <div class="alter" v-if="!show">
-	  		<input type="text" placeholder="昵称" v-model="alteruser.nickname">
-	  		<input type="text" placeholder="性别" v-model="alteruser.gender">
-	  		<input type="text" placeholder="地址" v-model="alteruser.address">
-	  		<input type="text" placeholder="简介" v-model="alteruser.introduction">
-	  		<input type="text" placeholder="主页" v-model="alteruser.homepage">
-	  		<input type="text" placeholder="id" v-model="user.id">
-	  		<button v-on:click="alter()">确定</button>
 	  	</div>
 	  	
 		<ul class="list user-dynamic col-4">
@@ -117,11 +110,12 @@
 		<div class="row">
 			<div class="col-8">
 				<div class="col-12" v-for="(item, index) in userVo.articleList" :key="index">
-					<div class="media-wraaper shadow">
-						<div class="media-left"><img :src="getImages(item.article.thumbnail)" class="thumnail-xs" /></div>
-						<div class="media-middle">
+					<div class="media-wraaper bg shadow">
+						<div class="media-left"><img :src="getImages(item.article.thumbnail)" class="avatar-lg link" />
+						</div>
+						<div class="media-middle flex flex-left flex-around">
 							<p class="title link" @click="toDetail(item.article.id)">{{ item.article.title }}</p>
-							<p class="sub-title">{{ item.article.summary }}</p>
+							<p class="sub-title ">{{ item.article.summary }}</p>
 						</div>
 					</div>
 				</div>
@@ -256,11 +250,13 @@
 export default {
 	data() {
 		return {
+			flag:0,
 			user: JSON.parse(localStorage.getItem('user')),
 			userVo: {
 				user: {},
 				articleList: {}
 			},
+			
 			writeArticle: {
 							topicId:'',
 							userId: '',
@@ -272,12 +268,10 @@ export default {
 							likes:0
 							
 						},
-						show:'true',
-						watch:'true',
+						show:false,
 			alteruser:{
 						 nickname: '',
 			    		 gender : '',
-						 // birthday : '',
 						 address : '',
 						 introduction: '',
 						 homepage: '',
@@ -319,8 +313,11 @@ export default {
 							});
 							alert("发布成功")
 						},
-		changeshow(){			
-					this.show=!this.show;
+		changeshow(id){			
+					this.flag=id;
+				},
+				change() {
+					this.show =! this.show;
 				},
 				getImages(_url) {
 							if (_url) {
@@ -337,6 +334,23 @@ export default {
 </script>
 
 <style scoped="scoped">
+	@font-face {
+	  font-family: 'iconfont';  /* project id 1434148 */
+	  src: url('//at.alicdn.com/t/font_1434148_udngasef88h.eot');
+	  src: url('//at.alicdn.com/t/font_1434148_udngasef88h.eot?#iefix') format('embedded-opentype'),
+	  url('//at.alicdn.com/t/font_1434148_udngasef88h.woff2') format('woff2'),
+	  url('//at.alicdn.com/t/font_1434148_udngasef88h.woff') format('woff'),
+	  url('//at.alicdn.com/t/font_1434148_udngasef88h.ttf') format('truetype'),
+	  url('//at.alicdn.com/t/font_1434148_udngasef88h.svg#iconfont') format('svg');
+	}
+.iconfont {
+	font-family: 'iconfont' !important;
+	font-size: 18px;
+	font-style: normal;
+	-webkit-font-smoothing: antialiased;
+	-webkit-text-stroke-width: 0.4px;
+	-moz-osx-font-smoothing: grayscale;
+}
 	.writearticle{
 			padding: 20px;
 			height: 800px;
@@ -367,9 +381,10 @@ export default {
 		height: 40px;
 		background-color: rgb(242, 242, 242);
 	}
-.all {
-	background-image: url('https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1152000485,3169834010&fm=26&gp=0.jpg');
-	background-size: calc(100%);
+.avatar-lg {
+	width: 170px;
+	height: 210px;
+	border-radius: 5%;
 }
 .banner {
 	width: 100%;
@@ -400,6 +415,11 @@ export default {
 	justify-content: center;
 	margin-top: 5px;
 	background-color: wheat;
+}
+.btn-circle {
+	width: 85px;
+	height: 80px;
+	border-radius: 45%;
 }
 .lab p {
 	font-size: 30px;
@@ -448,6 +468,7 @@ export default {
 .nav-item {
 	height: 70px;
 	line-height: 70px;
+	background-color: rgb(242, 242, 242);
 } 
 /* 下边框 */
 	.border-bottom {
@@ -586,6 +607,7 @@ export default {
 }
 .main-top {
 	margin-bottom: 20px;
+	margin-top: -30px;
 }
 *,
 :after,

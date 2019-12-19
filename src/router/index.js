@@ -61,6 +61,10 @@ const routes = [{
 				component: UserDetail
 			},
 			{
+				path: 'setting',
+				component: Setting
+			},
+			{
 				path: 'search',
 				component: Search,
 				children: [{
