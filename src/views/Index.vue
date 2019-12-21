@@ -447,11 +447,11 @@ audio {
 	margin-left: 50px;
 	font-size: 13px;
 }
-
 .box {
 	display: flex;
 	justify-content: space-around;
-	height: 120px;
+	height: 140px;
+	width: 350px;
 	padding: 10px;
 }
 .btn-follow {
@@ -466,7 +466,6 @@ audio {
 	display: inline-block;
 	text-align: center;
 }
-
 .GlobalWrite-card {
 	overflow: visible;
 }
@@ -476,7 +475,6 @@ audio {
 	flex: 1 1;
 	font-size: 14px;
 }
-
 .GlobalWrite-nav {
 	-webkit-box-pack: center;
 	-ms-flex-pack: center;
@@ -501,7 +499,6 @@ a {
 	color: inherit;
 	text-decoration: none;
 }
-
 a:-webkit-any-link {
 	color: -webkit-link;
 	cursor: pointer;
@@ -594,7 +591,6 @@ a {
 	margin: 0 -20px;
 	width: 100%;
 }
-
 .GlobalSideBar-navLink:hover {
 	background: #f6f6f6;
 }

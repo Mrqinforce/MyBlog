@@ -3,64 +3,17 @@
 		<div class="main-top  col-12 ">
 			<div class="row flex flex-left">
 			<div class="col-8 ">
-			<img :src="userVo.user.avatar" class="avatar-xs" />
+			<img :src="userVo.user.avatar" class="avatar-xs" @click="handleClick()" v-if="userVo.user.id === this.user.id"/>
+			<img :src="avatar" class="zh-avatars" v-else />
+		    <input type="file" @change="changeAvatar($event)" style="display: none;" id="fileBox" />
 			<p>{{ userVo.user.nickname }}</p>
-			
-			<!-- <div class="title"><i class="iconfont ic-man"></i></div>
-			<div class="info">
-				<ul>
-					<li>
-						<div class="meta-block">
-							<a href="/users/bf26d103fb8d/following">
-								<p>80</p>
-								关注
-								<i class="iconfont ic-arrow"></i>
-							</a>
-						</div>
-					</li>
-					<li>
-						<div class="meta-block">
-							<a href="/users/bf26d103fb8d/followers">
-								<p>34591</p>
-								粉丝
-								<i class="iconfont ic-arrow"></i>
-							</a>
-						</div>
-					</li>
-					<li>
-						<div class="meta-block">
-							<a href="/u/bf26d103fb8d">
-								<p>96</p>
-								文章
-								<i class="iconfont ic-arrow"></i>
-							</a>
-						</div>
-					</li>
-					<li>
-						<div class="meta-block">
-							<p>225309</p>
-							<div>字数</div>
-						</div>
-					</li>
-					<li>
-						<div class="meta-block">
-							<p>1079</p>
-							<div>收获喜欢</div>
-						</div>
-					</li>
-					<li>
-						<div class="meta-block">
-							<p>1016</p>
-							<div>总资产</div>
-						</div>
-					</li>
-				</ul>
-			</div> -->
 		</div>
 		
 			</div>
 		<ul class="btn link">
-			<button class="nav-item  btn-lg btn-circle " v-on:click="change()"><i class="iconfont">&#xe605;</i>写文章</button>
+			<button class="nav-item  btn-lg btn-circle " v-on:click="change()">
+				<i class="iconfont">&#xe605;</i>写文章
+				</button>
 					
 	  </ul>	
 	  <div class="   ">
@@ -69,6 +22,9 @@
 	  	<p>简介：{{userVo.user.introduction}}</p>
 	  	<p>家庭住址：{{ userVo.user.address }}</p>
 	  	<p>出生日期：{{ userVo.user.birthday.year }}年{{ userVo.user.birthday.month }}月{{ userVo.user.birthday.day }}日</p>
+		<p>
+		注册时间:{{ userVo.user.createTime.date.year }}年{{ userVo.user.createTime.date.month }}月{{ userVo.user.createTime.date.day }}日
+											</p>
 	  	</div>
 	  </div>
 	  
@@ -117,6 +73,7 @@
 							<p class="title link" @click="toDetail(item.article.id)">{{ item.article.title }}</p>
 							<p class="sub-title ">{{ item.article.summary }}</p>
 						</div>
+						<i class="iconfont" style="color:grey; font-size: 25px;float: right;" @click="dels(item.article.id, item.article.useId)">&#xe61c;</i>
 					</div>
 				</div>
 			</div>
@@ -313,6 +270,19 @@ export default {
 							});
 							alert("发布成功")
 						},
+						dels(id, id1) {
+									if (id1 !== this.user.id) {
+										alert('不能删');
+										return;
+									}
+									alert(id);
+									this.axios.delete(this.GLOBAL.baseUrl + '/article/delete?id=' + id + '&userId=' + this.user.id).then(res => {
+										this.user.articles--;
+										// this.$router.go(0);
+									});
+									alert('删除文章成功');
+								},
+								
 		changeshow(id){			
 					this.flag=id;
 				},
@@ -328,21 +298,64 @@ export default {
 						toDetail(id) {
 									this.$router.push('/article/' + id);
 								},
+								//点击头像，即模拟点击文件选择组件
+										handleClick: function() {
+											document.getElementById('fileBox').click();
+										},
+										changeAvatar: function() {
+											var _this = this;
+											let formData = new FormData();
+											alert(event.target.files[0].name);
+											formData.append('file', event.target.files[0]);
+											this.$http({
+												method: 'post',
+												url: this.GLOBAL.baseUrl + '/upload',
+												headers: {
+													'Content-Type': 'multipart/form-data'
+												},
+												data: formData,	
+												processData: false,
+												contentType: false
+											}).then(uploadFileRes=> {
+												console.log(uploadFileRes.data.data)
+												_this.avatar = uploadFileRes.data.data;
+												this.updateAvatar(_this.avatar);
+											});
+											//调用修改头像的方法
+											
+										},
+										updateAvatar: function(avatar) {
+											var _this = this
+											console.log(avatar)
+											this.$http({
+												method: 'post',
+												url: this.GLOBAL.baseUrl + '/user/update',
+												headers: {
+													'Content-Type': 'application/x-www-form-urlencoded'
+												},
+												params: {
+													mobile: this.user.mobile,
+													avatar: avatar
+												}
+											}).then(res => {
+												  console.log(res.data.code);
+											});
+										}
 	}
 };
 
 </script>
 
 <style scoped="scoped">
-	@font-face {
-	  font-family: 'iconfont';  /* project id 1434148 */
-	  src: url('//at.alicdn.com/t/font_1434148_udngasef88h.eot');
-	  src: url('//at.alicdn.com/t/font_1434148_udngasef88h.eot?#iefix') format('embedded-opentype'),
-	  url('//at.alicdn.com/t/font_1434148_udngasef88h.woff2') format('woff2'),
-	  url('//at.alicdn.com/t/font_1434148_udngasef88h.woff') format('woff'),
-	  url('//at.alicdn.com/t/font_1434148_udngasef88h.ttf') format('truetype'),
-	  url('//at.alicdn.com/t/font_1434148_udngasef88h.svg#iconfont') format('svg');
-	}
+@font-face {
+  font-family: 'iconfont';  /* project id 1434148 */
+  src: url('//at.alicdn.com/t/font_1434148_ad9vjrnxzc7.eot');
+  src: url('//at.alicdn.com/t/font_1434148_ad9vjrnxzc7.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_1434148_ad9vjrnxzc7.woff2') format('woff2'),
+  url('//at.alicdn.com/t/font_1434148_ad9vjrnxzc7.woff') format('woff'),
+  url('//at.alicdn.com/t/font_1434148_ad9vjrnxzc7.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_1434148_ad9vjrnxzc7.svg#iconfont') format('svg');
+}
 .iconfont {
 	font-family: 'iconfont' !important;
 	font-size: 18px;
@@ -618,14 +631,6 @@ audio {
 	background-color: rgb(245, 245, 240);
 }
 
-.iconfont {
-	font-family: iconfont !important;
-	font-size: inherit;
-	font-style: normal;
-	font-weight: 400 !important;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-}
 .main-top .btn,
 .main-top .user-follow-button {
 	float: right;

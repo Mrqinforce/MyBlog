@@ -8,7 +8,11 @@
 					  	<div class="con-head">
 					    <input type="text" placeholder="用户ID:" v-model="user.id">
 				  		<input type="text" placeholder="昵称:" v-model="alteruser.nickname">
-				  		<input type="text" placeholder="性别:" v-model="alteruser.gender">
+				  		<div class="xb">	
+				  		<p>性别:</p>					
+				  		<div><input  type="radio"  value="男" checked="checked"  v-model="alteruser.gender"/><p>男</p></div>					
+				  		<div><input  type="radio" value="女" v-model="alteruser.gender"/><p>女</p></div>							
+				  		</div> 
 				  		<input type="text" placeholder="地址:" v-model="alteruser.address">
 				  		<input type="text" placeholder="简介:" v-model="alteruser.introduction">
 						<input type="date" placeholder="生日:" v-model="alteruser.birthday">
@@ -73,7 +77,7 @@
 <style>
 	.alter{
 			padding: 180px;
-			height: 700px;
+			height: 900px;
 		}
 	.con-head{
 		display: flex;
@@ -97,5 +101,8 @@
 	.box {
 		width: 100px;
 		height: 800px;
+	}
+	.xb {
+		flex: ;
 	}
 </style>
