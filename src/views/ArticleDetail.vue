@@ -1,7 +1,7 @@
 <template>
 	<div class="container border">
 		<h2 class="title">{{ articleVo.article.title }}</h2>
-		<div class="box">
+		<div class="box1">
 			<img :src="articleVo.author.avatar" class="avatar-xs" />
 			<span class="meta gutter">{{ articleVo.author.nickname }}</span>
 			<span class="meta gutter">
@@ -9,7 +9,7 @@
 				{{ articleVo.article.createTime.time.hour }}:{{ articleVo.article.createTime.time.minute }}:{{ articleVo.article.createTime.time.second }}
 			</span>
 		</div>
-		<div v-html="articleVo.article.content"></div>
+		<p v-html="articleVo.article.content"></p>
 		<fieldset>
 			<legend>评论</legend>
 			<div class="card" v-for="(item, index) in comment" :key="index">
@@ -90,6 +90,9 @@ export default {
 	width: 40px;
 	height: 40px;
 }
+.title {
+	text-align: center;
+}
 .btn-round {
 	background-color: #2c3e50;
 	color: #ffffff;
@@ -98,8 +101,8 @@ export default {
 	width: 60px;
 	margin-left: 5px;
 }
-.box {
-	height: 50px;
+.box1 {
+	margin-bottom: -190px;
 	line-height: 10px;
 }
 .card {
@@ -112,6 +115,9 @@ export default {
 	margin: 30px;
 	/* padding是指自身边框到自身内部另一个容器边框之间的距离，就是容器内距离 */
 	padding: 20px;
+}
+.ccc {
+	margin-bottom: 200px;
 }
 .del {
 	width: 50px;

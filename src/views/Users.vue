@@ -17,7 +17,7 @@
 							<strong>来自：{{ item.address }}</strong>
 						</p>
 						<p class="meta">{{ item.articles }}篇文章，{{ item.fans }}个粉丝</p>
-						<button class="btn btn-lg btn-rd dark-fill">关注</button>
+						<button class="btn btn-lg btn-rd dark-fill link" @click="follow(item.id)" v-show="show">关注</button>
 					</div>
 				</div>
 			</div>
@@ -30,9 +30,16 @@
 export default {
 	data() {
 		return {
+			user: JSON.parse(localStorage.getItem('user')),
 			users: [],
 			currentPage: 1,
-			count: 6
+			count: 6,
+			userFollow: {
+				fromId: 0,
+				toId:0
+						},
+				show: true,
+				color: []	
 		};
 	},
 	created() {
@@ -70,7 +77,49 @@ export default {
 		},
 		go(page) {
 			window.location.href = page;
-		}
+		},
+		follow(id) {
+					this.userFollow.fromId = this.user.id;
+					this.userFollow.toId = id;
+					this.axios.get(this.GLOBAL.baseUrl + '/follow', {
+						params: {
+							fromId: this.userFollow.fromId,
+							toId: this.userFollow.toId
+						}
+					}).then(res => {
+						if(res.data.msg==='关注成功') {
+							alert("不能重复关注");
+							this.unFollow(id);
+							
+						} else {
+							
+							this.axios.post(this.GLOBAL.baseUrl + '/follow', this.userFollow).then(res => {
+								alert(res.data.msg);
+							})
+						}
+					})
+				},
+				changeColor(index) {
+					if(this.color[index]) {
+						this.color.splice(index, 1, false);
+						
+					} else {
+						this.color.splice(index, 1, true);
+					}
+				},
+				unFollow(id) {
+					this.userFollow.fromId = this.user.id;
+					this.userFollow.toId = id;
+					this.axios.delete(this.GLOBAL.baseUrl + '/follow', {
+						params: {
+							fromId: this.userFollow.fromId,
+							toId: this.userFollow.toId
+						}
+					}).then(res => {
+						alert(res.data.msg);
+					})
+				}
+		
 	}
 };
 </script>

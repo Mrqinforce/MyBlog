@@ -21,7 +21,12 @@ export default {
 	created() {
 		this.keywords = this.$route.query.keywords;
 	},
-	computed: {},
+	computed: {getImages(_url) {
+			if (_url) {
+				let _u = _url.substring(8);
+				return 'https://images.weserv.nl/?url=' + _u;
+			}
+		}},
 	methods: {}
 };
 </script>

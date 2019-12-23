@@ -46,7 +46,7 @@ export default {
 			like: {
 					userId: 0,
 					articleId:0
-						}
+						},		
 		};
 		
 	},

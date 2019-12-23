@@ -61,7 +61,7 @@
 								<p class="meta">写了{{ item.articles }}篇文章</p>
 								<p class="meta">{{ item.fans }}个粉丝</p>
 							</div>
-							<div class="flex-center-y"><i class="iconfont" style="color: rgb(0, 153, 0);">&#xe600;关注</i></div>
+							<div class="flex-center-y link"><i class="iconfont"  @click="follow(item.id) , changeColor(index)" :style="{ background: color[index] ? '#eee' : '', color: color[index] ? 'black' : ''}" v-show="show">&#xe600;关注</i><span v-show="color[index]">成功</span>关注</button></div>
 						</div>
 					</div>
 					<div class="GlobalSideBar col-12" data-za-detail-view-path-module="RightSideBar" data-za-extra-module="{&quot;card&quot;:{&quot;content&quot;:null}} ">
@@ -392,9 +392,15 @@ export default {
 			users: [],
 			topics: [],
 			like: {
-					userId: 0,
-					articleId:0
-						}
+				userId: 0,
+				articleId:0
+						},
+			userFollow: {
+				fromId: 0,
+				toId:0
+						},
+				show: true,
+				color: []
 			
 		};
 	},
@@ -442,6 +448,47 @@ export default {
 					});
 					alert('ok');
 				},
+				follow(id) {
+							this.userFollow.fromId = this.user.id;
+							this.userFollow.toId = id;
+							this.axios.get(this.GLOBAL.baseUrl + '/follow', {
+								params: {
+									fromId: this.userFollow.fromId,
+									toId: this.userFollow.toId
+								}
+							}).then(res => {
+								if(res.data.msg==='成功') {
+									alert("取消关注");
+									this.unFollow(id);
+									
+								} else {
+									
+									this.axios.post(this.GLOBAL.baseUrl + '/follow', this.userFollow).then(res => {
+										alert(res.data.msg);
+									})
+								}
+							})
+						},
+						changeColor(index) {
+							if(this.color[index]) {
+								this.color.splice(index, 1, false);
+								
+							} else {
+								this.color.splice(index, 1, true);
+							}
+						},
+						unFollow(id) {
+							this.userFollow.fromId = this.user.id;
+							this.userFollow.toId = id;
+							this.axios.delete(this.GLOBAL.baseUrl + '/follow', {
+								params: {
+									fromId: this.userFollow.fromId,
+									toId: this.userFollow.toId
+								}
+							}).then(res => {
+								alert(res.data.msg);
+							})
+						}
 	}
 };
 </script>
