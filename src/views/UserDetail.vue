@@ -1,83 +1,68 @@
 <template>
 	<div class="container">
+		<div class="carousel-wrap border">
+						<transition-group tag="ul" class="slide-ul" name="slide">
+							<li v-for="(item, index) in slideList" :key="index" v-show="index === currentIndex" @mouseenter="stop" @mouseleave="go">
+								<a :href="item.url"><img :src="item.image" :alt="item.description" /></a>
+							</li>
+						</transition-group>
+						<div class="carousel-items"><span v-for="(item, index) in slideList" :class="{ active: index === currentIndex }" @mouseover="change1(index)"></span></div>
+						</div>
 		<div class="main-top  col-12 ">
+			
 			<div class="row flex flex-left">
+				
 			<div class="col-8 ">
+				
 			<img :src="userVo.user.avatar" class="avatar-xs" @click="handleClick()" v-if="userVo.user.id === this.user.id"/>
 			<img :src="avatar" class="zh-avatars" v-else />
 		    <input type="file" @change="changeAvatar($event)" style="display: none;" id="fileBox" />
 			<p>{{ userVo.user.nickname }}</p>
+			<ul class="list user-dynamic">
+				<li class="badge-icon">
+					<a target="_blank" href="https://www.jianshu.com/mobile/campaign/stories2018">
+						<img width="20" heigth="20" src="//upload.jianshu.io/user_badge/75b4d254-b610-4455-8192-07adc0f82dee" alt="75b4d254 b610 4455 8192 07adc0f82dee" />
+						简书2018年的10个好故事作者
+					</a>
+				</li>
+				<li class="badge-icon">
+					<a target="_blank" href="http://www.jianshu.com/p/ed7ca899d796">
+						<img width="20" heigth="20" src="//upload.jianshu.io/user_badge/b8f6544c-367e-4c1a-81f6-4a4875c556d8" alt="B8f6544c 367e 4c1a 81f6 4a4875c556d8" />
+						简书版权
+					</a>
+				</li>
+				<li class="badge-icon">
+					<a target="_blank" href="http://www.jianshu.com/p/d1d89ed69098">
+						<img width="20" heigth="20" src="//upload.jianshu.io/user_badge/20679c3c-3334-417c-8b46-901bbd891345" alt="20679c3c 3334 417c 8b46 901bbd891345" />
+						旅行达人
+					</a>
+				</li>
+			</ul>
+			<p>电子邮箱：{{userVo.user.email}}</p>
+			<p>性别：{{userVo.user.gender}}</p>
+			<p>简介：{{userVo.user.introduction}}</p>
+			<p>家庭住址：{{ userVo.user.address }}</p>
+			<p>出生日期：{{ userVo.user.birthday.year }}年{{ userVo.user.birthday.month }}月{{ userVo.user.birthday.day }}日</p>
+			<p>注册时间:{{ userVo.user.createTime.date.year }}年{{ userVo.user.createTime.date.month }}月{{ userVo.user.createTime.date.day }}日</p>
 		</div>
 		
-			</div>
-		<ul class="btn link">
-			<button class="nav-item  btn-lg btn-circle " v-on:click="change()">
-				<i class="iconfont">&#xe605;</i>写文章
-				</button>
-					
-	  </ul>	
-	  <div class="   ">
-	  	<p>电子邮箱：{{userVo.user.email}}</p>
-	  	<p>性别：{{userVo.user.gender}}</p>
-	  	<p>简介：{{userVo.user.introduction}}</p>
-	  	<p>家庭住址：{{ userVo.user.address }}</p>
-	  	<p>出生日期：{{ userVo.user.birthday.year }}年{{ userVo.user.birthday.month }}月{{ userVo.user.birthday.day }}日</p>
-		<p>
-		注册时间:{{ userVo.user.createTime.date.year }}年{{ userVo.user.createTime.date.month }}月{{ userVo.user.createTime.date.day }}日
-											</p>
-	  	</div>
-	  </div>
-	  
-	  <div class="writearticle border" v-if="show">
-	  		<div class="con">
-	  			<div class="con-head">
-	  				<input type="text" placeholder="标题:" v-model="writeArticle.title">
-	  				<input type="text" placeholder="简介:" v-model="writeArticle.summary">
-	  				<input type="text" placeholder="专题ID:" v-model="writeArticle.topicId">
-	  				<input type="text" placeholder="图片地址:" v-model="writeArticle.thumbnail">
-	  			</div>
-	  			<div class="con-body">				
-	  				<textarea rows="10" cols="30" placeholder="内容:" v-model="writeArticle.content"></textarea>
-	  				<button @click="change()" v-on:click="release">发布</button>
-	  			</div>
-	  		</div>       						
-	  	</div>
-	  	
-		<ul class="list user-dynamic col-4">
-			<li class="badge-icon">
-				<a target="_blank" href="https://www.jianshu.com/mobile/campaign/stories2018">
-					<img width="20" heigth="20" src="//upload.jianshu.io/user_badge/75b4d254-b610-4455-8192-07adc0f82dee" alt="75b4d254 b610 4455 8192 07adc0f82dee" />
-					简书2018年的10个好故事作者
-				</a>
-			</li>
-			<li class="badge-icon">
-				<a target="_blank" href="http://www.jianshu.com/p/ed7ca899d796">
-					<img width="20" heigth="20" src="//upload.jianshu.io/user_badge/b8f6544c-367e-4c1a-81f6-4a4875c556d8" alt="B8f6544c 367e 4c1a 81f6 4a4875c556d8" />
-					简书版权
-				</a>
-			</li>
-			<li class="badge-icon">
-				<a target="_blank" href="http://www.jianshu.com/p/d1d89ed69098">
-					<img width="20" heigth="20" src="//upload.jianshu.io/user_badge/20679c3c-3334-417c-8b46-901bbd891345" alt="20679c3c 3334 417c 8b46 901bbd891345" />
-					旅行达人
-				</a>
-			</li>
-		</ul>
+			</div>	  	
+	  </div>	
 		<div class="row">
 			<div class="col-8">
 				<div class="col-12" v-for="(item, index) in userVo.articleList" :key="index">
 					<div class="media-wraaper bg shadow">
-						<div class="media-left"><img :src="getImages(item.article.thumbnail)" class="avatar-lg link" />
+						<div class="media-left"><img :src="getImages(item.article.thumbnail)" class=" thumnail-lg link" />
 						</div>
 						<div class="media-middle flex flex-left flex-around">
 							<p class="title link" @click="toDetail(item.article.id)">{{ item.article.title }}</p>
 							<p class="sub-title ">{{ item.article.summary }}</p>
 						</div>
-						<i class="iconfont" style="color:grey; font-size: 25px;float: right;" @click="dels(item.article.id, item.article.useId)">&#xe61c;</i>
+						<p class="link" @click="dels(item.article.id, item.article.useId)">删除</p>
 					</div>
 				</div>
 			</div>
-			<div class="col-4 border">
+			<div class="col-4 border xxx">
 				<div class="col-12">
 					<!---->
 					<ul class="list user-dynamic">
@@ -207,33 +192,31 @@
 export default {
 	data() {
 		return {
-			flag:0,
 			user: JSON.parse(localStorage.getItem('user')),
 			userVo: {
 				user: {},
 				articleList: {}
 			},
 			
-			writeArticle: {
-							topicId:'',
-							userId: '',
-							title:'',
-							summary: '',
-							thumbnail:'',
-							comments:0,
-							content:'',
-							likes:0
-							
-						},
-						show:false,
-			alteruser:{
-						 nickname: '',
-			    		 gender : '',
-						 address : '',
-						 introduction: '',
-						 homepage: '',
-						 id: ''
-							}
+							slideList: [
+											{
+												url: '#',
+												description: 'one',
+												image: 'https://p1.pstatp.com/origin/2a4100008d310b5fd8a8'
+											},
+											{
+												url: '#',
+												description: 'two',
+												image: 'http://n.sinaimg.cn/sinacn10102/492/w1920h972/20190815/b0b0-ichcymv2406805.jpg'
+											},
+											{
+												url: '#',
+												description: 'three',
+												image: 'http://img06file.tooopen.com/images/20180104/tooopen_sy_231706751674.jpg'
+											}
+										],
+										currentIndex: 0,
+										timer: null
 		};
 	},
 	created() {
@@ -249,32 +232,11 @@ export default {
 		});
 	},
 	methods: {
-		alter(){
-					this.alteruser.id = this.user.id;
-					alert(this.user.id)
-					this.axios.post(this.GLOBAL.baseUrl + '/user/alter', this.alteruser)
-						.then(res => {
-							this.$router.go(0);
-						});
-						alert("成功")
-				},
-				release() {
-							if(this.writeArticle.text==''||this.writeArticle.text==''||this.writeArticle.content==''||this.writeArticle.topicId==''){
-								alert("内容不能为空")
-								return;
-							}			
-							this.writeArticle.userId= this.user.id;
-							this.axios.post(this.GLOBAL.baseUrl + '/article', this.writeArticle)
-							.then(res => {
-								this.$router.go(0);
-							});
-							alert("发布成功")
-						},
 						dels(id, id1) {
-									if (id1 !== this.user.id) {
-										alert('不能删');
-										return;
-									}
+									// if (id1 !== this.user.id) {
+									// 	alert('不能删');
+									// 	return;
+									// }
 									alert(id);
 									this.axios.delete(this.GLOBAL.baseUrl + '/article/delete?id=' + id + '&userId=' + this.user.id).then(res => {
 										this.user.articles--;
@@ -283,12 +245,6 @@ export default {
 									alert('删除文章成功');
 								},
 								
-		changeshow(id){			
-					this.flag=id;
-				},
-				change() {
-					this.show =! this.show;
-				},
 				getImages(_url) {
 							if (_url) {
 								let _u = _url.substring(8);
@@ -340,7 +296,25 @@ export default {
 											}).then(res => {
 												  console.log(res.data.code);
 											});
-										}
+										},
+										go() {
+													this.timer = setInterval(() => {
+														this.autoPlay();
+													}, 3000);
+												},
+												stop() {
+													clearInterval(this.timer);
+													this.timer = null;
+												},
+												change1(index) {
+													this.currentIndex = index;
+												},
+												autoPlay() {
+															this.currentIndex++;
+															if (this.currentIndex > this.slideList.length - 1) {
+																this.currentIndex = 0;
+															}
+														},
 	}
 };
 
@@ -349,12 +323,12 @@ export default {
 <style scoped="scoped">
 @font-face {
   font-family: 'iconfont';  /* project id 1434148 */
-  src: url('//at.alicdn.com/t/font_1434148_ad9vjrnxzc7.eot');
-  src: url('//at.alicdn.com/t/font_1434148_ad9vjrnxzc7.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_1434148_ad9vjrnxzc7.woff2') format('woff2'),
-  url('//at.alicdn.com/t/font_1434148_ad9vjrnxzc7.woff') format('woff'),
-  url('//at.alicdn.com/t/font_1434148_ad9vjrnxzc7.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_1434148_ad9vjrnxzc7.svg#iconfont') format('svg');
+  src: url('//at.alicdn.com/t/font_1434148_6n5z320nmd.eot');
+  src: url('//at.alicdn.com/t/font_1434148_6n5z320nmd.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_1434148_6n5z320nmd.woff2') format('woff2'),
+  url('//at.alicdn.com/t/font_1434148_6n5z320nmd.woff') format('woff'),
+  url('//at.alicdn.com/t/font_1434148_6n5z320nmd.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_1434148_6n5z320nmd.svg#iconfont') format('svg');
 }
 .iconfont {
 	font-family: 'iconfont' !important;
@@ -363,47 +337,6 @@ export default {
 	-webkit-font-smoothing: antialiased;
 	-webkit-text-stroke-width: 0.4px;
 	-moz-osx-font-smoothing: grayscale;
-}
-	.writearticle{
-			padding: 20px;
-			height: 800px;
-		}
-	.con-head{
-		display: flex;
-		flex-direction: column;
-		margin-bottom: 20px;
-	}
-	 .con-head input{
-		width: 500px;
-		height: 40px;
-		margin-top: 20px;
-	}
-	.con-body{
-		width: 500px;
-		height: 40px;
-		margin-top: 20px;
-	}
-	.con-body textarea{
-		width: 800px;
-		height: 100px;
-		margin-top: 30px;
-		margin-bottom: 30px;
-	}
-	.con-body button{			
-		width: 100px;
-		height: 40px;
-		background-color: rgb(242, 242, 242);
-	}
-.avatar-lg {
-	width: 170px;
-	height: 210px;
-	border-radius: 5%;
-}
-.banner {
-	width: 100%;
-	height: 200px;
-	margin-top: 50px;
-	padding-bottom: 40px;
 }
 .cover {
 	width: 90%;
@@ -418,6 +351,10 @@ export default {
 .ku {
 	margin-top: 50px;
 	margin-right: 10px;
+}
+.media-wraaper {
+	margin-top: -50px;
+	margin-bottom: 80px;
 }
 .lab {
 	height: 50px;
@@ -455,6 +392,10 @@ export default {
 	margin-top: -50px;
 	flex-wrap: wrap;
 }
+.xxx {
+	margin-top: -50px;
+}
+
 .zh-navs {
 	height: 70px;
 	position: fixed;
@@ -494,11 +435,12 @@ export default {
 	border-radius: 50%;
 	cursor: pointer;
 }
-.thumnail-xs {
-	width: 150px;
-	height: 150px;
-	border-radius: 10px;
+.thumnail-lg {
+	width: 180px;
+	height: 223px;
+	border-radius: 3px;
 }
+
 	.preview-box {
 		width: 100px;
 		height: 100px;

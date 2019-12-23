@@ -3,7 +3,7 @@
 		<div class="back"><img src=../assets/img/background1.jpg /></div>
 		<div class="row">
 			<div class="col-3" v-for="(item, index) in topics" :key="index">
-				<div class="card link shadow">
+				<div class="card shadow">
 					<router-link :to="{ path: '/topic/' + item.id }"><img :src="item.logo" class="logo" /></router-link>
 					<p class="title">{{ item.topicName }}</p>
 					<p class="sub-title">{{ item.description.slice(0, 20) }}...</p>
@@ -37,7 +37,9 @@
 								<span class="meta ">转发</span>
 								<i class="iconfont meta gutter ">&#xe920;</i>
 								<span class="meta">{{ item.article.likes }}喜欢</span>
-								<i class="iconfont" style="color: rgb(255, 50, 0);">&#xe602;</i>
+								<!-- <i class="iconfont" style="color: rgb(255, 50, 0);">&#xe602;</i> -->
+								<i class="iconfont link" style="color: rgb(255, 50, 0);" @click="addLike(item.article.id)">&#xe602;</i>
+								<i class="iconfont link" style="margin-left: 20px;" @click="cancelLike(item.article.id)">&#xe60c;</i>
 							</p>
 							<span class="time">
 								发表时间：{{ item.article.createTime.date.year }}年{{ item.article.createTime.date.month }}月{{ item.article.createTime.date.day }}日
@@ -50,7 +52,7 @@
 				<h3>热门作者</h3>
 				<div class="row">
 					<div v-for="(item, index) in users" :key="index" class="col-12">
-						<div class="col-12 border box">
+						<div class="col-12 border box1">
 							<div class="flex-center-y">
 								<router-link :to="{ path: '/user/' + item.id }"><img :src="item.avatar" class="avatar-xs link" /></router-link>
 							</div>
@@ -385,9 +387,14 @@
 export default {
 	data() {
 		return {
+			user: JSON.parse(localStorage.getItem('user')),
 			articles: [],
 			users: [],
-			topics: []
+			topics: [],
+			like: {
+					userId: 0,
+					articleId:0
+						}
 			
 		};
 	},
@@ -411,7 +418,30 @@ export default {
 	methods: {
 		getImage(url) {
 			return 'https://images.weserv.nl/?url=' + url;
-		}
+		},
+		addLike(id) {
+					this.like.userId = this.user.id;
+					this.like.articleId = id;
+					this.axios
+					.post(this.GLOBAL.baseUrl + '/like', this.like)
+					.then(res => {
+						
+						this.$router.go(0);
+					});
+					alert('ok');
+		
+				},
+				cancelLike(id) {
+					this.axios.delete(this.GLOBAL.baseUrl + '/like',{
+						params: {
+							userId: this.user.id,
+							articleId: id
+						}
+					}).then(res => {
+						this.$router.go(0);
+					});
+					alert('ok');
+				},
 	}
 };
 </script>
@@ -447,10 +477,10 @@ audio {
 	margin-left: 50px;
 	font-size: 13px;
 }
-.box {
+.box1 {
 	display: flex;
 	justify-content: space-around;
-	height: 140px;
+	height: 130px;
 	width: 350px;
 	padding: 10px;
 }

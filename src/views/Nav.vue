@@ -16,7 +16,7 @@
 					<li class="nav-item"><router-link to="/users">作者</router-link></li>
 					<li class="nav-item" v-if="!this.user"><router-link to="/sign-in">登录</router-link></li>
 					<router-link :to="{ path: '/user/' + user.id }" v-if="this.user">
-						<img :src="user.avatar" @mouseenter="this.show = true" class="avatar-xs abs-center-right" />
+						<img :src="avatar" @mouseenter="this.show = true" class="avatar-xs abs-center-right" />
 					</router-link>
 					<li class="nav-item" v-if="this.user"><a class="link" @click="logout">退出</a></li>
 				</ul>
@@ -31,10 +31,17 @@ export default {
 	data() {
 		return {
 			user: JSON.parse(localStorage.getItem('user')),
-			keywords: ''
+			keywords: '',
+			avatar:'',
 		};
 	},
-	created() {},
+	created() {
+		this.axios.get(this.GLOBAL.baseUrl + '/user/' + this.user.id).then(res => {
+			console.log(res.data.data);
+			this.userVo = res.data.data;
+			this.avatar=this.userVo.user.avatar;
+		});
+	},
 	methods: {
 		logout() {
 			this.user = null;
